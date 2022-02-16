@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import RollTable from "./components/RollTable.vue";
 import SideNav from "./components/SideNav.vue";
-import SwaggerClient from "swagger-client";
 import socket from "./socket";
 </script>
 
@@ -9,11 +8,6 @@ import socket from "./socket";
 export default {
   mounted() {
     socket.emit("join_room", { room_name: "test" });
-  },
-  data() {
-    return {
-      client: new SwaggerClient("/openapi.json"),
-    };
   },
 };
 </script>

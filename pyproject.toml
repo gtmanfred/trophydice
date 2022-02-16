@@ -12,6 +12,7 @@ python-socketio = "^5.5.2"
 dicetray = "^2.1.1"
 figenv = "^1.2.0"
 uvicorn = "^0.17.4"
+websockets = "^10.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0.1"

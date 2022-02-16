@@ -23,6 +23,14 @@ export default {
 };
 </script>
 
+<style scoped>
+div.sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+</style>
+
 <template>
   <div class="sidenav">
     <RollType

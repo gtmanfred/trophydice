@@ -18,11 +18,9 @@ export default {
 </script>
 
 <template>
-  <div id="side-nav" class="sidenav">
+  <div class="rolltype">
     <div>
-      <button v-html="name"></button>
-      <form v-bind:id="name">
-      </form>
+      <button class="btn" v-html="name"></button>
     </div>
   </div>
 </template>
