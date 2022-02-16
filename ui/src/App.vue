@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import RollTable from "./components/RollTable.vue";
+import SideNav from "./components/SideNav.vue";
+import SwaggerClient from "swagger-client";
 import socket from "./socket";
 </script>
 
@@ -7,6 +9,11 @@ import socket from "./socket";
 export default {
   mounted() {
     socket.emit("join_room", { room_name: "test" });
+  },
+  data() {
+    return {
+      client: new SwaggerClient("/openapi.json"),
+    };
   },
 };
 </script>
@@ -24,6 +31,7 @@ export default {
 
   <main>
     <RollTable />
+    <SideNav />
   </main>
 </template>
 
@@ -31,10 +39,9 @@ export default {
 @import "./assets/base.css";
 
 #app {
-  max-width: 1280px;
+  max-width: 100vw;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
 }
 
@@ -44,48 +51,7 @@ header {
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+  margin: auto;
+  margin-bottom: 30px;
 }
 </style>

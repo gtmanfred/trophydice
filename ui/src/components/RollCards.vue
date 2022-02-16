@@ -1,20 +1,32 @@
 <template>
-  <div>
-    <p>{{ message }}</p>
-    <img v-for="die in dice" v-bind:key="die" :src="die.link" />
+  <div class="card">
+    <div v-html="message"></div>
+    <img
+      v-for="die in dice"
+      v-bind:key="die.uuid"
+      :src="die.link"
+      :class="dieStyle(die)"
+    />
   </div>
 </template>
 
 <script start>
 export default {
   props: ["message", "dice"],
+  methods: {
+    dieStyle(die) {
+      if (die.highest === false) {
+        return "lower";
+      }
+      return "";
+    },
+  },
 };
 </script>
 
 <style scoped>
-.item {
-  margin-top: 2rem;
-  display: flex;
+div:deep(strong) {
+  font-weight: bold;
 }
 
 .details {
@@ -22,38 +34,23 @@ export default {
   margin-left: 1rem;
 }
 
-i {
-  display: flex;
-  place-items: center;
-  place-content: center;
-  width: 32px;
-  height: 32px;
-
-  color: var(--color-text);
+.card {
+  display: block;
+  margin: auto;
 }
 
-h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  color: var(--color-heading);
+.lower {
+  height: 70px;
+  width: auto;
 }
 
-@media (min-width: 1024px) {
+img.card {
+  display: float;
+}
+@media() {
   .item {
     margin-top: 0;
     padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
-  }
-
-  i {
-    top: calc(50% - 25px);
-    left: -26px;
-    position: absolute;
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
-    border-radius: 8px;
-    width: 50px;
-    height: 50px;
   }
 
   .item:before {

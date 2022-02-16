@@ -1,3 +1,4 @@
+import json
 from enum import Enum
 from typing import Dict
 from typing import List
@@ -54,7 +55,7 @@ class Response(Roll):
 async def headers(x_room: Optional[str] = Header(None), x_user_name: Optional[str] = Header(None)):
     return {
         'room': x_room,
-        'user': x_user_name,
+        'user': f'<strong>{x_user_name}</strong>',
     }
 
 
@@ -93,12 +94,12 @@ def roll(light, dark):
 @router.get('/risk', response_model=Response)
 async def do_risk_roll(light: int, dark: Optional[int] = 0, headers: Dict = Depends(headers)):
     result = roll(light, dark)
-    message = f'{headers["user"]} rolled a {result.max_die}'
+    message = f'<p>{headers["user"]} rolled a {result.max_die}'
     if result.max_dark == result.max_die:
-        message += ' (dark) . If this is higher than your Ruin, your Ruin goes up by 1'
+        message += ' (dark). If this is higher than your Ruin, your Ruin goes up by 1'
     elif result.max_die < 6:
         message += '. You can add a dark die and re-roll'
-    message += '.'
+    message += '.</p>'
 
     resp = Response(
         message=message,
@@ -106,7 +107,7 @@ async def do_risk_roll(light: int, dark: Optional[int] = 0, headers: Dict = Depe
         max_die=result.max_die,
         max_dark=result.max_dark or None,
     )
-    await sm.emit('v1/risk', resp.dict(), headers['room'])
+    await sm.emit('v1/risk', json.loads(resp.json()), headers['room'])
     return resp
 
 
@@ -126,7 +127,7 @@ async def do_gold_roll(gold: int, headers: Dict = Depends(headers)):
         message=f'Found got {count} Gold.',
         dice=response,
     )
-    await sm.emit('v1/gold', resp.dict(), headers['room'])
+    await sm.emit('v1/gold', json.loads(resp.json()), headers['room'])
     return resp
 
 
@@ -139,7 +140,7 @@ async def do_ruin_roll(headers: Dict = Depends(headers)):
         max_die=result.max_die,
         dice=result.dice,
     )
-    await sm.emit('v1/ruin', resp.dict(), headers['room'])
+    await sm.emit('v1/ruin', json.loads(resp.json()), headers['room'])
     return resp
 
 
@@ -159,7 +160,7 @@ async def do_combat_roll(dark: int, headers: Dict = Depends(headers)):
         message=message,
         dice=result.dice,
     )
-    await sm.emit('v1/combat', resp.dict(), headers['room'])
+    await sm.emit('v1/combat', json.loads(resp.json()), headers['room'])
     return resp
 
 
@@ -172,7 +173,7 @@ async def do_weak_roll(headers: Dict = Depends(headers)):
         max_die=result.max_die,
         dice=result.dice,
     )
-    await sm.emit('v1/weak', resp.dict(), headers['room'])
+    await sm.emit('v1/weak', json.loads(resp.json()), headers['room'])
     return resp
 
 
@@ -184,7 +185,7 @@ async def do_help_roll(headers: Dict = Depends(headers)):
         dice=result.dice,
         max_die=result.max_die,
     )
-    await sm.emit('v1/help', resp.dict(), headers['room'])
+    await sm.emit('v1/help', json.loads(resp.json()), headers['room'])
     return resp
 
 
@@ -205,7 +206,7 @@ async def do_hunt_roll(light: int, headers: Dict = Depends(headers)):
         dice=result.dice,
         max_die=result.max_die,
     )
-    await sm.emit('v1/hunt', resp.dict(), headers['room'])
+    await sm.emit('v1/hunt', json.loads(resp.json()), headers['room'])
     return resp
       
 
@@ -221,7 +222,7 @@ async def do_contest_roll(light: int, dark: int, headers: Dict = Depends(headers
         message=message,
         dice=result.dice,
     )
-    await sm.emit('v1/contest', resp.dict(), headers['room'])
+    await sm.emit('v1/contest', json.loads(resp.json()), headers['room'])
     return resp
 
 
@@ -236,5 +237,5 @@ async def do_reduction_roll(headers: Dict = Depends(headers)):
         dice=result.dice,
         max_die=result.max_die,
     )
-    await sm.emit('v1/reduction', resp.dict(), headers['room'])
+    await sm.emit('v1/reduction', json.loads(resp.json()), headers['room'])
     return resp
