@@ -4,6 +4,9 @@ from typing import Optional
 import socketio
 from fastapi import FastAPI
 
+from ..config import Config
+
+
 class SocketManager:
     """
     Integrates SocketIO with FastAPI app. 
@@ -26,10 +29,19 @@ class SocketManager:
         cors_allowed_origins: Union[str, list] = '*',
         async_mode: str = "asgi"
     ) -> None:
-        # TODO: Change Cors policy based on fastapi cors Middleware
-        self._sio = socketio.AsyncServer(async_mode=async_mode, cors_allowed_origins=cors_allowed_origins)
+        if Config.REDIS_URL is not None:
+            self._mgr = socketio.AsyncRedisManager(Config.REDIS_URL)
+        else:
+            self._mgr = None
+
+        self._sio = socketio.AsyncServer(
+            async_mode=async_mode,
+            cors_allowed_origins=cors_allowed_origins,
+            client_manager=self._mgr,
+        )
         self._app = socketio.ASGIApp(
-            socketio_server=self._sio, socketio_path=socketio_path
+            socketio_server=self._sio,
+            socketio_path=socketio_path,
         )
 
         self.mount_location = mount_location
