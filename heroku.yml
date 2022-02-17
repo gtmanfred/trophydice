@@ -2,4 +2,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: run-server
+  web: poetry run run-server
