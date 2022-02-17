@@ -13,6 +13,12 @@ node 16 is what was used to develop.
 
 To run both the dev node server and the python app server as one command, run 
 
-```
-make -j 2 dev
-```
+.. code-block:: shell
+
+    make -j 2 dev
+
+
+SwaggerDocs
+===========
+
+<https://trophydice.herokuapp.com/docs>
