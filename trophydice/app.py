@@ -8,7 +8,7 @@ from .utils.plugin import import_string
 
 
 def redirect_to_ui():
-    return RedirectResponse('/ui')
+    return RedirectResponse('/ui/')
 
 
 def _register_handlers(app: FastAPI, location: str) -> None:
