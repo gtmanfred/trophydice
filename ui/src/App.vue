@@ -6,8 +6,19 @@ import socket from "./socket";
 
 <script lang="ts">
 export default {
+  computed: {
+    room: {
+      get() {
+        return window.location.href.split("#").pop();
+      },
+    },
+  },
   mounted() {
-    socket.emit("join_room", { room_name: "test" });
+    socket.on("connect", () => {
+      console.log("Connected to websocket!");
+      console.log(`Join room: ${this.room}`);
+      socket.emit("join_room", { room_name: this.room });
+    });
   },
 };
 </script>

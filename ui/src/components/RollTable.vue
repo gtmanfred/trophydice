@@ -15,13 +15,6 @@ export default {
       }
     });
   },
-  computed: {
-    room: {
-      get() {
-        return window.location.href.split("#").pop();
-      },
-    },
-  },
   methods: {
     updateAndScroll(message) {
       this.rolls.push(message);

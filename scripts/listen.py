@@ -28,7 +28,7 @@ async def connect():
 
 async def main():
     await sio.connect('http://localhost:8000/')
-    await sio.emit('join_room', {'room_name': 'test'})
+    await sio.emit('join_room', {'room_name': 'blah'})
     await sio.wait()
 
 asyncio.get_event_loop().run_until_complete(main())
