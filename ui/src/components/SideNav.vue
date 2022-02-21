@@ -7,11 +7,15 @@ import client from "../swagger";
 export default {
   mounted() {
     client.then((cli) => {
-      for (const endpoint in cli.spec.paths) {
+      console.log(cli)
+      for (const endpoint in cli.apis.rolls) {
+        console.log(cli.apis.rolls[endpoint].arguments);
+        /*
         this.endpoints.push({
-          path: cli.spec.paths[endpoint],
+          path: cli.apis.rolls[endpoint],
           name: endpoint.split("/").pop(),
         });
+        */
       }
     });
   },
@@ -26,7 +30,7 @@ export default {
 <style scoped>
 div.sidenav {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: left;
 }
 </style>

@@ -1,0 +1,14 @@
+FROM node:16
+
+WORKDIR /srv
+ENV PORT=8000 \
+    DEBIAN_FRONTEND=noninteractive \
+    PYENV_ROOT=/usr/local/pyenv/ \
+    PYENV_VERSION=3.9.10 \
+    PATH=/usr/local/pyenv/shims:$PATH
+
+ADD files/setup-pyenv.sh /usr/local/bin/setup-pyenv
+RUN setup-pyenv
+
+ADD files/run-dev.sh /usr/local/bin/run-dev
+CMD ["run-dev"]

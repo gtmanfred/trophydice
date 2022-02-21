@@ -1,0 +1,7 @@
+#Ignoring git and cache folders
+.git
+.cache
+
+# ignore virtualenvs and modules
+.venv
+node_modules/

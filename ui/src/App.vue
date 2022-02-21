@@ -35,8 +35,8 @@ export default {
   </header>
 
   <main>
-    <RollTable />
     <SideNav />
+    <RollTable />
   </main>
 </template>
 

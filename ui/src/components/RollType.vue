@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import client from "../swagger";
+</script>
+
 <script lang="ts">
 export default {
   props: ["endpoint", "name"],
@@ -8,6 +12,15 @@ export default {
         params.push(this.endpoint.get.parameters[param].name);
       }
     }
+  },
+  methods: {
+    rollDice() {
+      let payload = {};
+      for (const param in this.params) {
+        payload[param] = Math.ceil(Math.random() * 5);
+      }
+      client;
+    },
   },
   data() {
     return {

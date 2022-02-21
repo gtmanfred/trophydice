@@ -9,7 +9,7 @@
 
 dev: backend frontend
 
-backend: install
+backend: .venv/bin/poetry
 	.venv/bin/python3 -m asgi
 
 frontend:

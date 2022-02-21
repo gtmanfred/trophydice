@@ -10,6 +10,7 @@ WORKDIR /srv
 ENV PORT=8000
 
 ADD files/run-server.sh /usr/local/bin/run-server
+ADD files/run-dev.sh /usr/local/bin/run-dev
 CMD ["run-server"]
 
 ADD poetry.lock ./
