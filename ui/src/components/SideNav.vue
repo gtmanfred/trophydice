@@ -7,15 +7,13 @@ import client from "../swagger";
 export default {
   mounted() {
     client.then((cli) => {
-      console.log(cli)
-      for (const endpoint in cli.apis.rolls) {
-        console.log(cli.apis.rolls[endpoint].arguments);
-        /*
-        this.endpoints.push({
-          path: cli.apis.rolls[endpoint],
-          name: endpoint.split("/").pop(),
-        });
-        */
+      for (const endpoint in cli.spec.paths) {
+        if (cli.spec.paths[endpoint].get.tags) {
+          this.endpoints.push({
+            path: cli.spec.paths[endpoint],
+            name: endpoint.split("/").pop(),
+          });
+        };
       }
     });
   },
