@@ -1,30 +1,44 @@
-<script setup lang="ts">
-import client from "../swagger";
-</script>
-
 <script lang="ts">
 export default {
-  props: ["endpoint", "name"],
+  props: ["endpoint", "name", "path"],
+  computed: {
+    room: {
+      get() {
+        return window.location.href.split("#").pop();
+      },
+    },
+  },
   mounted() {
-    let params = [];
     for (const param in this.endpoint.get.parameters) {
       if (this.endpoint.get.parameters[param].in === "query") {
-        params.push(this.endpoint.get.parameters[param].name);
+        this.params.push(this.endpoint.get.parameters[param].name);
       }
     }
   },
   methods: {
-    rollDice() {
+    submitForm() {
       let payload = {};
-      for (const param in this.params) {
-        payload[param] = Math.ceil(Math.random() * 5);
+      for (let index = 0; index < this.params.length; index++) {
+        payload[this.params[index]] = this.diceNums[index];
       }
-      client;
+      let config = {
+        params: payload,
+        headers: {
+          "x-room": this.room,
+        },
+      };
+      console.log(`${window.location.origin}${this.path}`);
+      this.axios
+        .get(`${window.location.origin}${this.path}`, config)
+        .then((resp) => {
+          console.log(resp);
+        });
     },
   },
   data() {
     return {
       params: [],
+      diceNums: [0, 0],
     };
   },
 };
@@ -33,7 +47,11 @@ export default {
 <template>
   <div class="rolltype">
     <div>
-      <button class="btn" v-html="name"></button>
+      <div v-for="(param, index) in params" v-bind:key="param">
+        <p>{{ param }}</p>
+        <input type="number" v-model="diceNums[index]" placeholder="0" />
+      </div>
+      <button @click="submitForm" class="btn" v-html="name"></button>
     </div>
   </div>
 </template>

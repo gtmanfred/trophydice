@@ -10,9 +10,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "axios": "^0.26.0",
     "socket.io-client": "^4.4.1",
     "swagger-client": "^3.18.4",
     "vue": "^3.2.29",
+    "vue-axios": "^3.4.1",
     "vue-socket.io-extended": "^5.0.0-alpha.5"
   },
   "devDependencies": {

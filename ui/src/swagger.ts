@@ -1,3 +1,3 @@
-import SwaggerClient from "swagger-client"
+import SwaggerClient from "swagger-client";
 
 export default SwaggerClient("/openapi.json");

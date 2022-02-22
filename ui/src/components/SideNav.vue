@@ -10,10 +10,11 @@ export default {
       for (const endpoint in cli.spec.paths) {
         if (cli.spec.paths[endpoint].get.tags) {
           this.endpoints.push({
-            path: cli.spec.paths[endpoint],
+            endpoint: cli.spec.paths[endpoint],
             name: endpoint.split("/").pop(),
+            path: endpoint,
           });
-        };
+        }
       }
     });
   },
@@ -28,7 +29,7 @@ export default {
 <style scoped>
 div.sidenav {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: left;
 }
 </style>
@@ -38,8 +39,9 @@ div.sidenav {
     <RollType
       v-for="endpoint in endpoints"
       :key="endpoint"
-      :endpoint="endpoint.path"
+      :endpoint="endpoint.endpoint"
       :name="endpoint.name"
+      :path="endpoint.path"
     />
   </div>
 </template>
