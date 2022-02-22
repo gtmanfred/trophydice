@@ -214,7 +214,7 @@ async def do_hunt_roll(light: int, headers: Dict = Depends(headers)):
 async def do_contest_roll(light: int, dark: int, headers: Dict = Depends(headers)):
     result = roll(light, dark)
     message = f'{headers["user"]} was in a contest.'
-    ruin = len([die for die in result.dice if die.result == 1])
+    ruin = len([die for die in result.dice if die.result == 1 and die.dice_type is DiceTypeEnum.dark])
     if ruin:
         message += f' Their ruin went up by {ruin}.'
 
