@@ -46,7 +46,7 @@ export default {
     <v-expansion-panel-header>{{ name }}</v-expansion-panel-header>
     <v-expansion-panel-content>
       <div v-for="(param, index) in params" v-bind:key="param">
-        <v-chip>{{ diceNums[index] }}</v-chip>
+        <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
         <v-btn @click="diceNums[index] += 1" rounded>+</v-btn>
         <v-btn @click="diceNums[index] -= 1" rounded>-</v-btn>
       </div>
