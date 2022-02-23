@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import RollCard from "./RollCards.vue";
-import socket from "../socket";
-import client from "../swagger";
 </script>
 
 <script lang="ts">
 export default {
   mounted() {
-    client.then((client) => {
-      console.log(client);
+    this.client.then((client) => {
       for (const path in client.spec.paths) {
         let output = path.split("/");
-        socket.on(`${output[2]}/${output[3]}`, this.updateAndScroll);
+        this.socket.on(`${output[2]}/${output[3]}`, this.updateAndScroll);
       }
     });
   },
@@ -36,7 +33,6 @@ export default {
 <style>
 div {
   scrollbar-width: none;
-  margin: auto;
 }
 .rolls {
   height: 70vh;
@@ -51,12 +47,12 @@ div {
 </style>
 
 <template>
-  <div id="rolltable" class="rolls">
+  <v-sheet id="rolltable" class="rolls" style="width: 100vw">
     <RollCard
       v-for="roll in rolls"
       :key="roll.id"
       :message="roll.message"
       :dice="roll.dice"
     />
-  </div>
+  </v-sheet>
 </template>

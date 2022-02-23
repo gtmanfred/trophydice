@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <v-card class="card">
     <div v-html="message"></div>
     <img
       v-for="die in dice"
@@ -7,7 +7,7 @@
       :src="die.link"
       :class="dieStyle(die)"
     />
-  </div>
+  </v-card>
 </template>
 
 <script start>
@@ -47,6 +47,7 @@ div:deep(strong) {
 img.card {
   display: float;
 }
+
 @media() {
   .item {
     margin-top: 0;

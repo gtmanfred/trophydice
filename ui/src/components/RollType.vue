@@ -17,6 +17,7 @@ export default {
   },
   methods: {
     submitForm() {
+      this.$parent.drawer = false;
       let payload = {};
       for (let index = 0; index < this.params.length; index++) {
         payload[this.params[index]] = this.diceNums[index];
@@ -25,14 +26,10 @@ export default {
         params: payload,
         headers: {
           "x-room": this.room,
+          "x-user-name": this.username,
         },
       };
-      console.log(`${window.location.origin}${this.path}`);
-      this.axios
-        .get(`${window.location.origin}${this.path}`, config)
-        .then((resp) => {
-          console.log(resp);
-        });
+      this.axios.get(`${window.location.origin}${this.path}`, config);
     },
   },
   data() {
@@ -45,13 +42,15 @@ export default {
 </script>
 
 <template>
-  <div class="rolltype">
-    <div>
+  <v-list-item>
+    <v-list-item-content>
       <div v-for="(param, index) in params" v-bind:key="param">
-        <p>{{ param }}</p>
-        <input type="number" v-model="diceNums[index]" placeholder="0" />
+        <label>{{ param }}</label>
+        <v-btn @click="diceNums[index] += 1" rounded>+</v-btn>
+        <v-btn @click="diceNums[index] -= 1" rounded>-</v-btn>
+        <p>{{ diceNums[index] }}</p>
       </div>
-      <button @click="submitForm" class="btn" v-html="name"></button>
-    </div>
-  </div>
+      <v-btn @click="submitForm" class="btn">{{ name }}</v-btn>
+    </v-list-item-content>
+  </v-list-item>
 </template>
