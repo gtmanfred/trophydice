@@ -50,7 +50,7 @@ export default {
         <v-btn @click="diceNums[index] += 1" rounded>+</v-btn>
         <v-btn @click="diceNums[index] -= 1" rounded>-</v-btn>
       </div>
-      <v-btn @click="submitForm" class="btn">Roll</v-btn>
+      <v-btn @click="submitForm" color="error" class="btn">Roll</v-btn>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
