@@ -42,15 +42,15 @@ export default {
 </script>
 
 <template>
-  <v-list-item>
-    <v-list-item-content>
+  <v-expansion-panel>
+    <v-expansion-panel-header>{{ name }}</v-expansion-panel-header>
+    <v-expansion-panel-content>
       <div v-for="(param, index) in params" v-bind:key="param">
-        <label>{{ param }}</label>
         <v-btn @click="diceNums[index] += 1" rounded>+</v-btn>
         <v-btn @click="diceNums[index] -= 1" rounded>-</v-btn>
-        <p>{{ diceNums[index] }}</p>
+        <label>{{ diceNums[index] }}</label>
       </div>
-      <v-btn @click="submitForm" class="btn">{{ name }}</v-btn>
-    </v-list-item-content>
-  </v-list-item>
+      <v-btn @click="submitForm" class="btn">Roll</v-btn>
+    </v-expansion-panel-content>
+  </v-expansion-panel>
 </template>

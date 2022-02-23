@@ -37,14 +37,14 @@ div.sidenav {
 
 <template>
   <v-navigation-drawer v-model="drawer" absolute temporary>
-    <v-list>
+    <v-expansion-panels accordion>
       <RollType
         v-for="endpoint in endpoints"
-        :key="endpoint"
+        :key="endpoint.name"
         :endpoint="endpoint.endpoint"
         :name="endpoint.name"
         :path="endpoint.path"
       />
-    </v-list>
+    </v-expansion-panels>
   </v-navigation-drawer>
 </template>
