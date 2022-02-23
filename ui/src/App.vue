@@ -2,6 +2,7 @@
 import RollTable from "./components/RollTable.vue";
 import SideNav from "./components/SideNav.vue";
 import RoomModal from "./components/RoomModal.vue";
+import UserModal from "./components/UserModal.vue";
 </script>
 
 <script lang="ts">
@@ -47,6 +48,7 @@ export default {
 
       <main>
         <SideNav :drawer="drawer" />
+        <UserModal />
         <RoomModal />
         <RollTable />
       </main>

@@ -22,7 +22,6 @@ export default {
     },
     createRoom() {
       this.room = Str.uuid();
-      console.log(this.room);
       this.redirectToRoom();
     },
   },
@@ -47,7 +46,7 @@ export default {
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-card-text>Join a room?</v-card-text>
-          <input v-model="room" type="text" />
+          <input v-model="room" type="text" style="background: white"/>
           <v-btn color="primary" text @click="redirectToRoom()">Join.</v-btn>
         </v-card-actions>
       </v-card>
