@@ -36,18 +36,38 @@ export default {
 
         <v-divider></v-divider>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-card-text>Create a room?</v-card-text>
-          <v-btn color="primary" text @click="createRoom()">Create.</v-btn>
+          <v-container>
+            <v-row justify="center">
+              <v-col>
+                <v-card-text>Create a room?</v-card-text>
+              </v-col>
+              <v-col>
+                <v-btn color="primary" text @click="createRoom()">
+                  Create.
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-card-actions>
 
         <v-divider></v-divider>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-card-text>Join a room?</v-card-text>
-          <input v-model="room" type="text" style="background: white" />
-          <v-btn color="primary" text @click="redirectToRoom()">Join.</v-btn>
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-card-text>Join a room?</v-card-text>
+              </v-col>
+              <v-col>
+                <input v-model="room" type="text" style="background: white"/>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-btn color="primary" text @click="redirectToRoom()">
+                Join.
+              </v-btn>
+            </v-row>
+          </v-container>
         </v-card-actions>
       </v-card>
     </v-dialog>
