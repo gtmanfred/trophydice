@@ -26,7 +26,7 @@ export default {
         params: payload,
         headers: {
           "x-room": this.room,
-          "x-user-name": window.currentUser.user,
+          "x-user-name": window.currentUser ? window.currentUser.user : "Guest",
         },
       };
       this.axios.get(`${window.location.origin}${this.path}`, config);
