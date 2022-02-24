@@ -16,6 +16,15 @@ export default {
     }
   },
   methods: {
+    increment(index) {
+      this.diceNums[index]++;
+    },
+    decrement(index) {
+      if (this.diceNums[index] == 0) {
+        return;
+      }
+      this.diceNums[index]--;
+    },
     submitForm() {
       this.$parent.drawer = false;
       let payload = {};
@@ -48,8 +57,8 @@ export default {
       <v-container v-for="(param, index) in params" v-bind:key="param">
         <v-row justify="center">
           <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
-          <v-btn @click="diceNums[index] += 1" rounded>+</v-btn>
-          <v-btn @click="diceNums[index] -= 1" rounded>-</v-btn>
+          <v-btn @click="increment(index)" rounded>+</v-btn>
+          <v-btn @click="decrement(index)" rounded>-</v-btn>
         </v-row>
       </v-container>
       <v-container>
