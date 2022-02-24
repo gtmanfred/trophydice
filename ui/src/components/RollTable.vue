@@ -34,9 +34,9 @@ export default {
 div {
   scrollbar-width: none;
 }
-.rolls {
+#rolltable {
   height: 70vh;
-  width: 50vw;
+  width: 100vw;
   overflow-y: scroll;
   text-align: center;
 }
@@ -47,7 +47,7 @@ div {
 </style>
 
 <template>
-  <v-sheet id="rolltable" class="rolls" style="width: 100vw">
+  <v-sheet id="rolltable" class="rolls">
     <RollCard
       v-for="roll in rolls"
       :key="roll.id"
