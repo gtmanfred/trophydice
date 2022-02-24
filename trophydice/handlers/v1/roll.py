@@ -231,7 +231,7 @@ async def do_reduction_roll(headers: Dict = Depends(headers)):
     result = roll(light=1, dark=0)
     resp = Response(
         message=(
-            f'{headers["user"]} rolled a {result.max_die}. If this less than your current Ruin, '
+            f'{headers["user"]} rolled a {result.max_die}. If this is less than your current Ruin, '
             'your betrayal goes unnoticed and you decrease your Ruin by 1'
         ),
         dice=result.dice,

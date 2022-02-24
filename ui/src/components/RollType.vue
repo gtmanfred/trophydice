@@ -38,7 +38,11 @@ export default {
           "x-user-name": window.currentUser ? window.currentUser.user : "Guest",
         },
       };
-      this.axios.get(`${window.location.origin}${this.path}`, config);
+      this.axios
+        .get(`${window.location.origin}${this.path}`, config)
+        .then(() => {
+          this.diceNums = [0, 0];
+        });
     },
   },
   data() {
