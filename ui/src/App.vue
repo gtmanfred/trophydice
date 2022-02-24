@@ -33,17 +33,19 @@ export default {
   <v-app>
     <v-sheet
       class="overflow-hidden"
-      style="position: relative; display: float; height: 100vh; margin: auto"
+      style="position: relative; height: 100vh; margin: auto"
     >
-      <header>
-        <v-btn color="pink" dark @click.stop="drawer = !drawer">Rolls</v-btn>
-        <img
-          alt="Trophy logo"
-          class="logo"
-          src="./assets/logo.svg"
-          width="125"
-          height="125"
-        />
+      <header style="margin: 1rem">
+        <v-row justify="center">
+          <img
+            alt="Trophy logo"
+            class="logo"
+            src="./assets/logo.svg"
+            width="125"
+            height="125"
+          />
+          <v-btn color="pink" dark justify="right" @click.stop="drawer = !drawer">Rolls</v-btn>
+        </v-row>
       </header>
 
       <v-main>

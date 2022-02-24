@@ -36,7 +36,7 @@ div.sidenav {
 </style>
 
 <template>
-  <v-navigation-drawer v-model="drawer" absolute temporary>
+  <v-navigation-drawer v-model="drawer" temporary>
     <v-expansion-panels accordian>
       <RollType
         v-for="endpoint in endpoints"
