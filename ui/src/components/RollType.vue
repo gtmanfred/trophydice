@@ -56,8 +56,8 @@ export default {
 
 <template>
   <v-expansion-panel>
-    <v-expansion-panel-header>{{ name }}</v-expansion-panel-header>
-    <v-expansion-panel-content>
+    <v-expansion-panel-title>{{ name }}</v-expansion-panel-title>
+    <v-expansion-panel-text>
       <v-container v-for="(param, index) in params" v-bind:key="param">
         <v-row justify="center">
           <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
@@ -70,6 +70,6 @@ export default {
           <v-btn @click="submitForm" color="error" class="btn">Roll</v-btn>
         </v-row>
       </v-container>
-    </v-expansion-panel-content>
+    </v-expansion-panel-text>
   </v-expansion-panel>
 </template>
