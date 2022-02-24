@@ -34,7 +34,7 @@ export default {
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-card-text>What is your Name? </v-card-text>
-          <input v-model="username" type="text" style="background: white"/>
+          <input v-model="username" type="text" style="background: white" />
           <v-btn color="primary" text @click="dialog = false">save</v-btn>
         </v-card-actions>
       </v-card>

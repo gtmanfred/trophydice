@@ -46,12 +46,12 @@ export default {
         />
       </header>
 
-      <main>
+      <v-main>
         <SideNav :drawer="drawer" />
         <UserModal />
         <RoomModal />
         <RollTable />
-      </main>
+      </v-main>
     </v-sheet>
   </v-app>
 </template>

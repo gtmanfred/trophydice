@@ -26,7 +26,7 @@ export default {
         params: payload,
         headers: {
           "x-room": this.room,
-          "x-user-name": window.currentUser.user
+          "x-user-name": window.currentUser.user,
         },
       };
       this.axios.get(`${window.location.origin}${this.path}`, config);
@@ -45,12 +45,18 @@ export default {
   <v-expansion-panel>
     <v-expansion-panel-header>{{ name }}</v-expansion-panel-header>
     <v-expansion-panel-content>
-      <div v-for="(param, index) in params" v-bind:key="param">
-        <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
-        <v-btn @click="diceNums[index] += 1" rounded>+</v-btn>
-        <v-btn @click="diceNums[index] -= 1" rounded>-</v-btn>
-      </div>
-      <v-btn @click="submitForm" color="error" class="btn">Roll</v-btn>
+      <v-container v-for="(param, index) in params" v-bind:key="param">
+        <v-row justify="center">
+          <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
+          <v-btn @click="diceNums[index] += 1" rounded>+</v-btn>
+          <v-btn @click="diceNums[index] -= 1" rounded>-</v-btn>
+        </v-row>
+      </v-container>
+      <v-container>
+        <v-row justify="center">
+          <v-btn @click="submitForm" color="error" class="btn">Roll</v-btn>
+        </v-row>
+      </v-container>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
