@@ -42,9 +42,7 @@ export default {
                 <v-card-text>Create a room?</v-card-text>
               </v-col>
               <v-col>
-                <v-btn color="primary" text @click="createRoom()">
-                  Create.
-                </v-btn>
+                <v-btn text @click="createRoom()">Create.</v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -59,13 +57,11 @@ export default {
                 <v-card-text>Join a room?</v-card-text>
               </v-col>
               <v-col>
-                <input v-model="room" type="text" style="background: white"/>
+                <input v-model="room" type="text" style="background: white" />
               </v-col>
             </v-row>
             <v-row justify="center">
-              <v-btn color="primary" text @click="redirectToRoom()">
-                Join.
-              </v-btn>
+              <v-btn text @click="redirectToRoom()">Join.</v-btn>
             </v-row>
           </v-container>
         </v-card-actions>

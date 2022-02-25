@@ -61,13 +61,13 @@ export default {
       <v-container v-for="(param, index) in params" v-bind:key="param">
         <v-row justify="center">
           <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
-          <v-btn @click="increment(index)" rounded>+</v-btn>
-          <v-btn @click="decrement(index)" rounded>-</v-btn>
+          <v-btn @click="increment(index)" color="grey--darken-2">+</v-btn>
+          <v-btn @click="decrement(index)" class="changer">-</v-btn>
         </v-row>
       </v-container>
       <v-container>
         <v-row justify="center">
-          <v-btn @click="submitForm" color="error" class="btn">Roll</v-btn>
+          <v-btn @click="submitForm" color="red" x-small>Roll</v-btn>
         </v-row>
       </v-container>
     </v-expansion-panel-text>

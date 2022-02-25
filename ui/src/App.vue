@@ -37,14 +37,19 @@ export default {
     >
       <header style="margin: 1rem">
         <v-row justify="center">
-          <img
-            alt="Trophy logo"
-            class="logo"
-            src="./assets/logo.svg"
-            width="125"
-            height="125"
-          />
-          <v-btn color="pink" dark justify="right" @click.stop="drawer = !drawer">Rolls</v-btn>
+          <v-col></v-col>
+          <v-col>
+            <img
+              alt="Trophy logo"
+              class="logo"
+              src="./assets/logo.svg"
+              width="125"
+              height="125"
+            />
+          </v-col>
+          <v-col justify="right">
+            <v-btn color="pink" @click.stop="drawer = !drawer">Rolls</v-btn>
+          </v-col>
         </v-row>
       </header>
 

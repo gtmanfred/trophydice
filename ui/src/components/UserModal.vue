@@ -45,7 +45,7 @@ export default {
             </v-row>
             <v-row>
               <v-col>
-                <v-btn color="primary" text @click="dialog = false">save</v-btn>
+                <v-btn text @click="dialog = false">save</v-btn>
               </v-col>
             </v-row>
           </v-container>

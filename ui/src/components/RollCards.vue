@@ -1,12 +1,14 @@
 <template>
   <v-card class="card">
-    <div v-html="message"></div>
-    <img
-      v-for="die in dice"
-      v-bind:key="die.uuid"
-      :src="die.link"
-      :class="dieStyle(die)"
-    />
+    <v-card-text v-html="message"></v-card-text>
+    <v-card-text>
+      <img
+        v-for="die in dice"
+        v-bind:key="die.uuid"
+        :src="die.link"
+        :class="dieStyle(die)"
+      />
+    </v-card-text>
   </v-card>
 </template>
 
