@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-card>
+    <v-card width="100%">
       <v-divider />
       <v-card-text v-html="message"></v-card-text>
       <v-card-text>
