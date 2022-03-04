@@ -14,15 +14,21 @@ export default {
       },
     },
   },
+  methods: {
+    pingConnection() {
+      if (!this.socket.connected) {
+        this.socket.io.reconnect();
+        return;
+      }
+    },
+  },
   mounted() {
     this.socket.on("connect", () => {
       console.log("Connected to websocket!");
       console.log(`Join room: ${this.room}`);
       this.socket.emit("join_room", { room_name: this.room });
     });
-    this.socket.on("disconnect", () => {
-      this.socket.connect();
-    });
+    setInterval(this.pingConnection, 1000);
   },
   data() {
     return {
