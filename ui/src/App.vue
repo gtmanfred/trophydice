@@ -20,6 +20,9 @@ export default {
       console.log(`Join room: ${this.room}`);
       this.socket.emit("join_room", { room_name: this.room });
     });
+    this.socket.on("disconnect", () => {
+      this.socket.connect();
+    });
   },
   data() {
     return {

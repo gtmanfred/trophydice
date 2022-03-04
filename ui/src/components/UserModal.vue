@@ -1,11 +1,6 @@
 <script lang="ts">
 export default {
   computed: {
-    room: {
-      get() {
-        return window.location.href.split("#").pop().startsWith("http");
-      },
-    },
     username: {
       get() {
         return window.currentUser ? window.currentUser.user : null;

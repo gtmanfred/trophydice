@@ -38,7 +38,7 @@ export default {
           </v-card-text>
           <v-card-actions>
             <v-col>
-              <v-btn text @click="createRoom()">Create.</v-btn>
+              <v-btn text @click.stop="createRoom()" @click="dialog = false">Create.</v-btn>
             </v-col>
           </v-card-actions>
         </v-row>
