@@ -26,7 +26,6 @@ export default {
       this.diceNums[index]--;
     },
     submitForm() {
-      this.$emit("drawer-toggle");
       let payload = {};
       for (let index = 0; index < this.params.length; index++) {
         payload[this.params[index]] = this.diceNums[index];
@@ -41,6 +40,7 @@ export default {
       this.axios
         .get(`${window.location.origin}${this.path}`, config)
         .then(() => {
+          this.$emit("drawer-toggle");
           this.diceNums = [0, 0];
         });
     },
