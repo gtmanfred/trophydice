@@ -18,10 +18,16 @@ export default {
       }
     });
   },
+  watch: {
+    drawer: function () {
+      this.state = !this.state;
+    },
+  },
   data() {
     return {
       endpoints: [],
       model: 1,
+      state: null,
     };
   },
 };
@@ -36,7 +42,7 @@ div.sidenav {
 </style>
 
 <template>
-  <v-navigation-drawer v-model="drawer" temporary>
+  <v-navigation-drawer v-model="state" temporary>
     <v-expansion-panels accordian>
       <RollType
         v-for="endpoint in endpoints"
@@ -44,6 +50,7 @@ div.sidenav {
         :endpoint="endpoint.endpoint"
         :name="endpoint.name"
         :path="endpoint.path"
+        v-on:drawer-toggle="state = !state"
       />
     </v-expansion-panels>
   </v-navigation-drawer>

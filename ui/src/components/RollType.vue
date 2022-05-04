@@ -26,7 +26,7 @@ export default {
       this.diceNums[index]--;
     },
     submitForm() {
-      this.$parent.drawer = false;
+      this.$emit("drawer-toggle");
       let payload = {};
       for (let index = 0; index < this.params.length; index++) {
         payload[this.params[index]] = this.diceNums[index];
@@ -61,8 +61,8 @@ export default {
       <v-container v-for="(param, index) in params" v-bind:key="param">
         <v-row justify="center">
           <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
-          <v-btn @click="increment(index)" color="grey--darken-2">+</v-btn>
           <v-btn @click="decrement(index)" class="changer">-</v-btn>
+          <v-btn @click="increment(index)" color="grey--darken-2">+</v-btn>
         </v-row>
       </v-container>
       <v-container>
