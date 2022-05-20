@@ -13,6 +13,11 @@ export default {
         return window.location.href.split("#").pop();
       },
     },
+    mobile: {
+      get() {
+        return window.innerWidth <= 760
+      },
+    },
   },
   methods: {
     pingConnection() {
@@ -57,7 +62,7 @@ export default {
             />
           </v-col>
           <v-col justify="right">
-            <v-btn color="pink" @click.stop="drawer = !drawer">Rolls</v-btn>
+            <v-btn v-if="mobile" color="pink" @click.stop="drawer = !drawer">Rolls</v-btn>
           </v-col>
         </v-row>
       </header>

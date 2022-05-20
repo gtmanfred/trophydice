@@ -6,6 +6,13 @@ import NickList from "./NickList.vue";
 <script lang="ts">
 export default {
   props: ["drawer"],
+  methods: {
+    toggleDrawer() {
+      if (window.innerWidth <= 760) {
+        this.state = !this.state;
+      };
+    },
+  },
   mounted() {
     this.client.then((cli) => {
       for (const endpoint in cli.spec.paths) {
@@ -21,7 +28,7 @@ export default {
   },
   watch: {
     drawer: function () {
-      this.state = !this.state;
+      this.toggleDrawer()
     },
   },
   data() {
@@ -51,7 +58,7 @@ div.sidenav {
         :endpoint="endpoint.endpoint"
         :name="endpoint.name"
         :path="endpoint.path"
-        v-on:drawer-toggle="state = !state"
+        v-on:drawer-toggle="toggleDrawer()"
       />
     </v-expansion-panels>
     <NickList />
