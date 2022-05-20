@@ -81,6 +81,14 @@ class SocketManager:
         return self._sio.close_room
 
     @property
+    def get_participants(self):
+        if self._mgr is not None:
+            return self._mgr.get_participants
+        async def test(namespace, room):
+            return []
+        return test
+
+    @property
     def get_session(self):
         return self._sio.get_session
 

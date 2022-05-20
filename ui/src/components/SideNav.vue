@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import RollType from "./RollType.vue";
+import NickList from "./NickList.vue";
 </script>
 
 <script lang="ts">
@@ -53,5 +54,6 @@ div.sidenav {
         v-on:drawer-toggle="state = !state"
       />
     </v-expansion-panels>
+    <NickList />
   </v-navigation-drawer>
 </template>

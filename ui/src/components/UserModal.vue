@@ -9,6 +9,7 @@ export default {
         window.currentUser = {
           user: user,
         };
+        this.socket.emit("set_nick", { nick: user });
       },
     },
   },
