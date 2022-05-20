@@ -28,7 +28,7 @@ export default {
   },
   watch: {
     drawer: function () {
-      this.toggleDrawer();
+      this.state = !this.state;
     },
   },
   data() {
