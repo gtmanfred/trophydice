@@ -10,7 +10,7 @@ export default {
     toggleDrawer() {
       if (window.innerWidth <= 760) {
         this.state = !this.state;
-      };
+      }
     },
   },
   mounted() {
@@ -28,14 +28,14 @@ export default {
   },
   watch: {
     drawer: function () {
-      this.toggleDrawer()
+      this.toggleDrawer();
     },
   },
   data() {
     return {
       endpoints: [],
       model: 1,
-      state: null,
+      state: window.innerWidth > 760,
     };
   },
 };
