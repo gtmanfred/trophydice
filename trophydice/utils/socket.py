@@ -84,9 +84,7 @@ class SocketManager:
     def get_participants(self):
         if self._mgr is not None:
             return self._mgr.get_participants
-        async def test(namespace, room):
-            return []
-        return test
+        return lambda namespace, room: []
 
     @property
     def get_session(self):
