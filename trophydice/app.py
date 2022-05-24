@@ -1,7 +1,12 @@
+import os
+
+import bugsnag
+from bugsnag.asgi import BugsnagMiddleware
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
+from .config import Config
 from .socketio import sm
 from .utils.plugin import find_modules
 from .utils.plugin import import_string
@@ -28,6 +33,16 @@ def _register_static_files(app: FastAPI) -> None:
     app.mount("/ui", StaticFiles(directory="trophydice/static/", html=True, check_dir=False), name="webapp")
 
 
+def _register_bugsnag(app: FastAPI) -> FastAPI:
+    bugsnag.configure(
+        api_key = Config.BUGSNAG_API_KEY,
+        project_root = os.getcwd(),
+    )
+
+    # Wrap your ASGI app with Bugsnag
+    return BugsnagMiddleware(app)
+
+
 def create_app():
     app = FastAPI()
 
@@ -35,6 +50,7 @@ def create_app():
 
     _register_handlers(app, 'trophydice.handlers')
     _register_static_files(app)
+    app = _register_bugsnag(app)
 
     sm.init_app(app)
     _register_socket_cmds('trophydice.commands')
