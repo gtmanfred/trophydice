@@ -50,9 +50,10 @@ def create_app():
 
     _register_handlers(app, 'trophydice.handlers')
     _register_static_files(app)
-    app = _register_bugsnag(app)
 
     sm.init_app(app)
     _register_socket_cmds('trophydice.commands')
+
+    app = _register_bugsnag(app)
 
     return app
