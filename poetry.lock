@@ -80,6 +80,20 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "bugsnag"
+version = "4.2.1"
+description = "Automatic error monitoring for django, flask, etc."
+category = "main"
+optional = false
+python-versions = ">=3.5, <4"
+
+[package.dependencies]
+webob = "*"
+
+[package.extras]
+flask = ["flask", "blinker"]
+
+[[package]]
 name = "click"
 version = "8.0.3"
 description = "Composable command line interface toolkit"
@@ -394,6 +408,18 @@ h11 = ">=0.8"
 standard = ["websockets (>=10.0)", "httptools (>=0.2.0,<0.4.0)", "watchgod (>=0.6)", "python-dotenv (>=0.13)", "PyYAML (>=5.1)", "uvloop (>=0.14.0,!=0.15.0,!=0.15.1)", "colorama (>=0.4)"]
 
 [[package]]
+name = "webob"
+version = "1.8.7"
+description = "WSGI request and response object"
+category = "main"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*"
+
+[package.extras]
+docs = ["Sphinx (>=1.7.5)", "pylons-sphinx-themes"]
+testing = ["pytest (>=3.1.0)", "coverage", "pytest-cov", "pytest-xdist"]
+
+[[package]]
 name = "websockets"
 version = "10.1"
 description = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
@@ -404,7 +430,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "1c1c35900ae8fc5341f667b02ba9c0a129ae1ed61e932fbb5150b314c130b464"
+content-hash = "4af9dc5400d326d68ef23b812a7ea605f13f1d988708f899786ce7eb404d3e3b"
 
 [metadata.files]
 aioredis = [
@@ -434,6 +460,10 @@ attrs = [
 bidict = [
     {file = "bidict-0.21.4-py3-none-any.whl", hash = "sha256:3ac67daa353ecf853a1df9d3e924f005e729227a60a8dbada31a4c31aba7f654"},
     {file = "bidict-0.21.4.tar.gz", hash = "sha256:42c84ffbe6f8de898af6073b4be9ea7ccedcd78d3474aa844c54e49d5a079f6f"},
+]
+bugsnag = [
+    {file = "bugsnag-4.2.1-py3-none-any.whl", hash = "sha256:7bd4fb4cd20a1babcd0164c37f3dc248776c37c2e11b531dbb535684428386d7"},
+    {file = "bugsnag-4.2.1.tar.gz", hash = "sha256:3d3e9768acf7405004842992ee35ca2bbc71b1c365a5b846a42290211b92b7a5"},
 ]
 click = [
     {file = "click-8.0.3-py3-none-any.whl", hash = "sha256:353f466495adaeb40b6b5f592f9f91cb22372351c84caeb068132442a4518ef3"},
@@ -630,6 +660,10 @@ typing-extensions = [
 uvicorn = [
     {file = "uvicorn-0.17.4-py3-none-any.whl", hash = "sha256:e85872d84fb651cccc4c5d2a71cf7ead055b8fb4d8f1e78e36092282c0cf2aec"},
     {file = "uvicorn-0.17.4.tar.gz", hash = "sha256:25850bbc86195a71a6477b3e4b3b7b4c861fb687fb96912972ce5324472b1011"},
+]
+webob = [
+    {file = "WebOb-1.8.7-py2.py3-none-any.whl", hash = "sha256:73aae30359291c14fa3b956f8b5ca31960e420c28c1bec002547fb04928cf89b"},
+    {file = "WebOb-1.8.7.tar.gz", hash = "sha256:b64ef5141be559cfade448f044fa45c2260351edcb6a8ef6b7e00c7dcef0c323"},
 ]
 websockets = [
     {file = "websockets-10.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:38db6e2163b021642d0a43200ee2dec8f4980bdbda96db54fde72b283b54cbfc"},
