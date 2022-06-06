@@ -46,8 +46,8 @@ def _register_bugsnag(app: FastAPI) -> FastAPI:
 
 def _register_loaderio(app: FastAPI) -> None:
     if Config.LOADERIO_API_KEY is not None:
-        app.get(f'/{Config.LOADERIO_API_KEY}.txt')(
-            lambda: Response(Config.LOADERIO_API_KEY, media_type='text/plain'),
+        app.get(f'/loaderio-{Config.LOADERIO_API_KEY}.txt')(
+            lambda: Response(f'loaderio-{Config.LOADERIO_API_KEY}', media_type='text/plain'),
         )
 
 
