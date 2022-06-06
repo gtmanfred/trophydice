@@ -53,11 +53,12 @@ def _register_loaderio(app: FastAPI) -> None:
             'https://api.loader.io/v2/apps',
             headers={'loaderio-auth': Config.LOADERIO_API_KEY},
         )))
-        for app in apps:
-            if app['app'] == 'roll.trophyrpg.com':
-                appid = app['app_id']
+        for loaderio_app in apps:
+            if loaderio_app['app'] == 'roll.trophyrpg.com':
+                appid = loaderio_app['app_id']
+
         app.get(f'/loaderio-{appid}.txt')(
-            lambda: Response(f'loaderio-{appid}', media_type='text/plain'),
+            lambda: Response(f'loaderio-{appid}', media_type='text/plain')
         )
 
 
@@ -67,8 +68,8 @@ def create_app():
     app.get('/')(redirect_to_ui)
 
     _register_handlers(app, 'trophydice.handlers')
-    _register_static_files(app)
     _register_loaderio(app)
+    _register_static_files(app)
 
     sm.init_app(app)
     _register_socket_cmds('trophydice.commands')
