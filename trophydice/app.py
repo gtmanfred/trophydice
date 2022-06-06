@@ -1,4 +1,7 @@
+import json
 import os
+from urllib.request import Request
+from urllib.request import urlopen
 
 import bugsnag
 from bugsnag.asgi import BugsnagMiddleware
@@ -46,8 +49,15 @@ def _register_bugsnag(app: FastAPI) -> FastAPI:
 
 def _register_loaderio(app: FastAPI) -> None:
     if Config.LOADERIO_API_KEY is not None:
-        app.get(f'/loaderio-{Config.LOADERIO_API_KEY}.txt')(
-            lambda: Response(f'loaderio-{Config.LOADERIO_API_KEY}', media_type='text/plain'),
+        apps = json.load(urlopen(Request(
+            'https://api.loader.io/v2/apps',
+            headers={'loaderio-auth': Config.LOADERIO_API_KEY},
+        )))
+        for app in apps:
+            if app['app'] == 'roll.trophyrpg.com':
+                appid = app['id']
+        app.get(f'/loaderio-{appid}.txt')(
+            lambda: Response(f'loaderio-{appid}', media_type='text/plain'),
         )
 
 
