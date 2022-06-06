@@ -51,6 +51,10 @@ class Response(Roll):
     message: str
 
 
+async def emit(roll, resp, room=None):
+    if room is not None:
+        await sm.emit(f'v1/{roll}', json.loads(resp.json()), room)
+
 
 async def headers(x_room: Optional[str] = Header(None), x_user_name: Optional[str] = Header(None)):
     return {
@@ -107,7 +111,7 @@ async def do_risk_roll(light: int, dark: Optional[int] = 0, headers: Dict = Depe
         max_die=result.max_die,
         max_dark=result.max_dark or None,
     )
-    await sm.emit('v1/risk', json.loads(resp.json()), headers['room'])
+    await emit('risk', resp, headers['room'])
     return resp
 
 
@@ -127,7 +131,7 @@ async def do_gold_roll(gold: int, headers: Dict = Depends(headers)):
         message=f'Found got {count} Gold.',
         dice=response,
     )
-    await sm.emit('v1/gold', json.loads(resp.json()), headers['room'])
+    await emit('gold', resp, headers['room'])
     return resp
 
 
@@ -140,7 +144,7 @@ async def do_ruin_roll(headers: Dict = Depends(headers)):
         max_die=result.max_die,
         dice=result.dice,
     )
-    await sm.emit('v1/ruin', json.loads(resp.json()), headers['room'])
+    await emit('ruin', resp, headers['room'])
     return resp
 
 
@@ -160,7 +164,7 @@ async def do_combat_roll(dark: int, headers: Dict = Depends(headers)):
         message=message,
         dice=result.dice,
     )
-    await sm.emit('v1/combat', json.loads(resp.json()), headers['room'])
+    await emit('combat', resp, headers['room'])
     return resp
 
 
@@ -173,7 +177,7 @@ async def do_weak_roll(headers: Dict = Depends(headers)):
         max_die=result.max_die,
         dice=result.dice,
     )
-    await sm.emit('v1/weak', json.loads(resp.json()), headers['room'])
+    await emit('weak', resp, headers['room'])
     return resp
 
 
@@ -185,7 +189,7 @@ async def do_help_roll(headers: Dict = Depends(headers)):
         dice=result.dice,
         max_die=result.max_die,
     )
-    await sm.emit('v1/help', json.loads(resp.json()), headers['room'])
+    await emit('help', resp, headers['room'])
     return resp
 
 
@@ -206,7 +210,7 @@ async def do_hunt_roll(light: int, headers: Dict = Depends(headers)):
         dice=result.dice,
         max_die=result.max_die,
     )
-    await sm.emit('v1/hunt', json.loads(resp.json()), headers['room'])
+    await emit('hunt', resp, headers['room'])
     return resp
       
 
@@ -222,7 +226,7 @@ async def do_contest_roll(light: int, dark: int, headers: Dict = Depends(headers
         message=message,
         dice=result.dice,
     )
-    await sm.emit('v1/contest', json.loads(resp.json()), headers['room'])
+    await emit('contest', resp, headers['room'])
     return resp
 
 
@@ -237,5 +241,5 @@ async def do_reduction_roll(headers: Dict = Depends(headers)):
         dice=result.dice,
         max_die=result.max_die,
     )
-    await sm.emit('v1/reduction', json.loads(resp.json()), headers['room'])
+    await emit('reduction', resp, headers['room'])
     return resp
