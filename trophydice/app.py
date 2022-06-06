@@ -55,7 +55,7 @@ def _register_loaderio(app: FastAPI) -> None:
         )))
         for app in apps:
             if app['app'] == 'roll.trophyrpg.com':
-                appid = app['id']
+                appid = app['app_id']
         app.get(f'/loaderio-{appid}.txt')(
             lambda: Response(f'loaderio-{appid}', media_type='text/plain'),
         )
