@@ -3,6 +3,7 @@ import os
 import bugsnag
 from bugsnag.asgi import BugsnagMiddleware
 from fastapi import FastAPI
+from fastapi import Response
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -43,6 +44,13 @@ def _register_bugsnag(app: FastAPI) -> FastAPI:
     return BugsnagMiddleware(app)
 
 
+def _register_loaderio(app: FastAPI) -> None:
+    if Config.LOADERIO_API_KEY is not None:
+        app.get(f'/{Config.LOADERIO_API_KEY}.txt')(
+            lambda: Response(Config.LOADERIO_API_KEY, media_type='text/plain'),
+        )
+
+
 def create_app():
     app = FastAPI()
 
@@ -50,6 +58,7 @@ def create_app():
 
     _register_handlers(app, 'trophydice.handlers')
     _register_static_files(app)
+    _register_loaderio(app)
 
     sm.init_app(app)
     _register_socket_cmds('trophydice.commands')
