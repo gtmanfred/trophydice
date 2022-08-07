@@ -26,11 +26,11 @@ export default {
       this.diceNums[index]--;
     },
     submitForm() {
-      let payload = {};
+      const payload = {};
       for (let index = 0; index < this.params.length; index++) {
         payload[this.params[index]] = this.diceNums[index];
       }
-      let config = {
+      const config = {
         params: payload,
         headers: {
           "x-room": this.room,

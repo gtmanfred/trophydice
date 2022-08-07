@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import RollType from "./RollType.vue";
 import NickList from "./NickList.vue";
+import GenericRoll from "./GenericRoll.vue";
+import KoFiButton from "@linusborg/vue-ko-fi-button";
 </script>
 
 <script lang="ts">
@@ -50,7 +52,7 @@ div.sidenav {
 </style>
 
 <template>
-  <v-navigation-drawer v-model="state" temporary>
+  <v-navigation-drawer v-model="state" temporary width="300">
     <v-expansion-panels accordian>
       <RollType
         v-for="endpoint in endpoints"
@@ -60,7 +62,9 @@ div.sidenav {
         :path="endpoint.path"
         v-on:drawer-toggle="toggleDrawer()"
       />
+      <GenericRoll />
     </v-expansion-panels>
     <NickList />
+    <KoFiButton username="gtmanfred" color="#323842" title="Support Me" />
   </v-navigation-drawer>
 </template>

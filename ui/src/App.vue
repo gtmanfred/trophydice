@@ -22,6 +22,12 @@ export default {
       }
     },
   },
+  components: {
+    RollTable,
+    SideNav,
+    RoomModal,
+    UserModal,
+  },
   mounted() {
     this.socket.on("connect", () => {
       console.log("Connected to websocket!");

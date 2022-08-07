@@ -23,7 +23,7 @@ export default {
       if (die.highest === false) {
         return "lower";
       }
-      return "";
+      return "highest";
     },
   },
 };
@@ -35,7 +35,11 @@ div:deep(strong) {
 }
 
 .lower {
-  height: 70px;
-  width: auto;
+  height: auto;
+  width: 5vw;
+}
+.highest {
+  height: auto;
+  width: 6vw;
 }
 </style>

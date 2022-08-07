@@ -35,7 +35,7 @@ export default {
                 <input
                   v-model="username"
                   type="text"
-                  style="background: white"
+                  style="background: white; color: black"
                 />
               </v-col>
             </v-row>

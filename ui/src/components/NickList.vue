@@ -32,7 +32,7 @@ export default {
   <v-list disabled>
     <v-list-subheader>Connected Users</v-list-subheader>
     <v-list-item v-for="nick in nicklist" :key="nick">
-      <v-list-item-title v-text="nick"></v-list-item-title>
+      <v-list-item-title>{{ nick }}</v-list-item-title>
     </v-list-item>
   </v-list>
 </template>

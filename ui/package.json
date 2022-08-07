@@ -10,11 +10,12 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@linusborg/vue-ko-fi-button": "^0.1.0",
     "@supercharge/strings": "^1.28.0",
-    "@vuetify/vite-plugin": "^1.0.0-alpha.10",
     "axios": "^0.27.2",
     "socket.io-client": "^4.5.1",
     "swagger-client": "^3.18.5",
+    "vite-plugin-vuetify": "^1.0.0-alpha.14",
     "vue": "^3.2.37",
     "vue-axios": "^3.4.1",
     "vue-socket.io-extended": "^5.0.0-alpha.5"
