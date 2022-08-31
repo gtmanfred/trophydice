@@ -1,0 +1,11 @@
+[tests]
+min_version = "v0.4.0"
+
+[services.redis]
+image = "redis:latest"
+
+[services.redis.ports]
+"6379/tcp" = ""
+
+[services.redis.export]
+REDIS_URL = "redis://{HOST}:{PORT;6379/tcp}"
