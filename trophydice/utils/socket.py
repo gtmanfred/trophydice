@@ -29,8 +29,8 @@ class SocketManager:
         cors_allowed_origins: Union[str, list] = '*',
         async_mode: str = "asgi"
     ) -> None:
-        if Config.REDIS_URL is not None:
-            self._mgr = socketio.AsyncRedisManager(Config.REDIS_URL)
+        if Config.REDISCLOUD_URL is not None:
+            self._mgr = socketio.AsyncRedisManager(Config.REDISCLOUD_URL)
         else:
             self._mgr = None
 

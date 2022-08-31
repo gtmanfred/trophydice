@@ -8,4 +8,4 @@ image = "redis:latest"
 "6379/tcp" = ""
 
 [services.redis.export]
-REDIS_URL = "redis://{HOST}:{PORT;6379/tcp}"
+REDISCLOUD_URL = "redis://{HOST}:{PORT;6379/tcp}"
