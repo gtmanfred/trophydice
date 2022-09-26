@@ -10,9 +10,7 @@ export default {
   props: ["drawer"],
   methods: {
     toggleDrawer() {
-      if (window.innerWidth <= 760) {
-        this.state = !this.state;
-      }
+      this.state = !this.state;
     },
   },
   mounted() {
