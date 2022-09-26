@@ -9,8 +9,12 @@ export default {
     },
   },
   mounted() {
+    console.log(this.endpoint);
     for (const param in this.endpoint.get.parameters) {
-      if (this.endpoint.get.parameters[param].in === "query") {
+      if (
+        this.endpoint.get.parameters[param].in === "query" &&
+        this.endpoint.get.parameters[param].schema.type === "integer"
+      ) {
         this.params.push(this.endpoint.get.parameters[param].name);
       }
     }

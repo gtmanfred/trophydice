@@ -1,6 +1,12 @@
 [tests]
 min_version = "v0.4.0"
 
+[tests.steps]
+install = [
+    "apt update",
+    "apt install nodejs npm",
+]
+
 [services.redis]
 image = "redis:latest"
 

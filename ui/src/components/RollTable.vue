@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { parseStringStyle } from "@vue/shared";
 import RollCard from "./RollCards.vue";
 </script>
 
@@ -7,7 +8,7 @@ export default {
   mounted() {
     this.client.then((client) => {
       for (const path in client.spec.paths) {
-        let output = path.split("/");
+        const output = path.split("/");
         this.socket.on(`${output[2]}/${output[3]}`, this.updateAndScroll);
       }
     });
@@ -17,7 +18,7 @@ export default {
       this.rolls.push(message);
       const timer = (ms) => new Promise((res) => setTimeout(res, ms));
       timer(100).then(() => {
-        let tableDiv = document.getElementById("rolltable");
+        const tableDiv = document.getElementById("rolltable");
         tableDiv.scrollTop = tableDiv.scrollHeight - tableDiv.clientHeight;
       });
     },

@@ -3,13 +3,17 @@ from enum import Enum
 from typing import Dict
 from typing import List
 from typing import Optional
+from typing import Union
 from uuid import UUID
 from uuid import uuid4
 
 import dicetray
 from fastapi import APIRouter
+from fastapi import BackgroundTasks
 from fastapi import Depends
 from fastapi import Header
+from fastapi import status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
@@ -215,7 +219,27 @@ async def do_hunt_roll(light: int, headers: Dict = Depends(headers)):
       
 
 @router.get('/contest', response_model=Response, tags=["rolls"])
-async def do_contest_roll(light: int, dark: int, headers: Dict = Depends(headers)):
+async def do_contest_roll(
+    light: int,
+    dark: int,
+    tasks: BackgroundTasks,
+    users: Union[str, None] = None,
+    headers: Dict = Depends(headers),
+):
+    if users is not None:
+        tasks.add_task(
+            do_contest,
+            light=light,
+            dark=dark,
+            room=headers['room'],
+            user=headers['user'],
+            contestants=users,
+        )
+        return JSONResponse(
+            status_code=status.HTTP_201_CREATED,
+            content=Response(dice=[], message='Waiting for other contestants'),
+            background=tasks,
+        )
     result = roll(light, dark)
     message = f'{headers["user"]} was in a contest.'
     ruin = len([die for die in result.dice if die.result == 1 and die.dice_type is DiceTypeEnum.dark])

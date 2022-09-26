@@ -18,7 +18,8 @@
     "vite-plugin-vuetify": "^1.0.0-alpha.14",
     "vue": "^3.2.37",
     "vue-axios": "^3.4.1",
-    "vue-socket.io-extended": "^5.0.0-alpha.5"
+    "vue-socket.io-extended": "^5.0.0-alpha.5",
+    "vue3-simple-alert": "^1.0.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.3",
