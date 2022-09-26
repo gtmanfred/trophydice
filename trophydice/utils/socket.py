@@ -1,5 +1,6 @@
 from typing import Union
 from typing import Optional
+from urllib.parse import urlparse
 
 import socketio
 from fastapi import FastAPI
@@ -30,7 +31,11 @@ class SocketManager:
         async_mode: str = "asgi"
     ) -> None:
         if Config.REDIS_URL is not None:
-            self._mgr = socketio.AsyncRedisManager(Config.REDIS_URL)
+            url = Config.REDIS_URL
+            urlobj = urlparse(url)
+            if not urlobj.path:
+                url = f'{url}/0'
+            self._mgr = socketio.AsyncRedisManager(url)
         else:
             self._mgr = None
 

@@ -8,7 +8,7 @@ license = "APACHE-2.0"
 [tool.poetry.dependencies]
 python = "^3.8"
 fastapi = "^0.73.0"
-python-socketio = "^5.5.2"
+python-socketio = "^5.7.1"
 dicetray = "^2.1.1"
 figenv = "^1.2.0"
 uvicorn = "^0.17.4"
