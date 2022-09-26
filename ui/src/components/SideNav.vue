@@ -62,7 +62,7 @@ div.sidenav {
         :path="endpoint.path"
         v-on:drawer-toggle="toggleDrawer()"
       />
-      <GenericRoll />
+      <GenericRoll v-on:drawer-toggle="toggleDrawer()" />
     </v-expansion-panels>
     <NickList />
     <KoFiButton username="gtmanfred" color="#323842" title="Support Me" />
