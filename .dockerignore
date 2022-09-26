@@ -4,4 +4,4 @@
 
 # ignore virtualenvs and modules
 .venv
-node_modules/
+ui/node_modules/

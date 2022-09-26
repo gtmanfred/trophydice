@@ -36,7 +36,7 @@ div {
   scrollbar-width: none;
 }
 #rolltable {
-  height: 70vh;
+  height: 85vh;
   width: 100vw;
   overflow-y: scroll;
   text-align: center;
