@@ -52,7 +52,7 @@ div.sidenav {
 </style>
 
 <template>
-  <v-navigation-drawer v-model="state" width="300">
+  <v-navigation-drawer temporary v-model="state" width="300">
     <v-expansion-panels accordian>
       <RollType
         v-for="endpoint in endpoints"
