@@ -58,8 +58,8 @@ export default {
               alt="Trophy logo"
               class="logo"
               src="./assets/logo.svg"
-              width="125"
-              height="125"
+              width="100"
+              height="100"
             />
           </v-col>
           <v-col justify="right">
