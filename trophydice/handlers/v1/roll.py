@@ -226,20 +226,6 @@ async def do_contest_roll(
     users: Union[str, None] = None,
     headers: Dict = Depends(headers),
 ):
-    if users is not None:
-        tasks.add_task(
-            do_contest,
-            light=light,
-            dark=dark,
-            room=headers['room'],
-            user=headers['user'],
-            contestants=users,
-        )
-        return JSONResponse(
-            status_code=status.HTTP_201_CREATED,
-            content=Response(dice=[], message='Waiting for other contestants'),
-            background=tasks,
-        )
     result = roll(light, dark)
     message = f'{headers["user"]} was in a contest.'
     ruin = len([die for die in result.dice if die.result == 1 and die.dice_type is DiceTypeEnum.dark])
