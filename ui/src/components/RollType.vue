@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import InputNumber from './InputNumber.vue';
+</script>
+
 <script lang="ts">
 export default {
   props: ["endpoint", "name", "path"],
@@ -20,20 +24,22 @@ export default {
     }
   },
   methods: {
-    increment(index) {
-      this.diceNums[index]++;
-    },
-    decrement(index) {
-      if (this.diceNums[index] == 0) {
+    changeNumber(index, event) {
+      let value = parseInt(event);
+      if (isNaN(parseInt(event))) {
+        value = parseInt(event.target.value);
+        if (isNaN(value)) return;
+        this.diceNums[index] = value;
         return;
       }
-      this.diceNums[index]--;
+      this.diceNums[index] = value;
     },
     submitForm() {
       const payload = {};
       for (let index = 0; index < this.params.length; index++) {
         payload[this.params[index]] = this.diceNums[index];
       }
+      console.log(payload);
       const config = {
         params: payload,
         headers: {
@@ -62,18 +68,22 @@ export default {
   <v-expansion-panel>
     <v-expansion-panel-title>{{ name }}</v-expansion-panel-title>
     <v-expansion-panel-text>
-      <v-container v-for="(param, index) in params" v-bind:key="param">
-        <v-row justify="center">
-          <v-chip>{{ param }} {{ diceNums[index] }}</v-chip>
-          <v-btn @click="decrement(index)" class="changer">-</v-btn>
-          <v-btn @click="increment(index)" color="grey--darken-2">+</v-btn>
-        </v-row>
-      </v-container>
-      <v-container>
-        <v-row justify="center">
-          <v-btn @click="submitForm" color="red" x-small>Roll</v-btn>
-        </v-row>
-      </v-container>
+      <v-form>
+        <v-container v-for="(param, index) in params" v-bind:key="param">
+          <v-row justify="center">
+            <InputNumber
+              :label="param"
+              :value="diceNums[index]"
+              v-on:input="(event) => changeNumber(index, event)"
+            />
+          </v-row>
+        </v-container>
+        <v-container>
+          <v-row justify="center">
+            <v-btn @click="submitForm" color="red" x-small>Roll</v-btn>
+          </v-row>
+        </v-container>
+      </v-form>
     </v-expansion-panel-text>
   </v-expansion-panel>
 </template>

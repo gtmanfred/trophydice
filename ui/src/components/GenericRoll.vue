@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import InputNumber from './InputNumber.vue';
+</script>
 <script lang="ts">
 export default {
   props: ["endpoint", "name", "path"],
@@ -21,14 +24,15 @@ export default {
     },
   },
   methods: {
-    increment(color) {
-      this.diceNums[color]++;
-    },
-    decrement(color) {
-      if (this.diceNums[color] == 0) {
+    changeNumber(color, event) {
+      let value = parseInt(event);
+      if (isNaN(parseInt(event))) {
+        value = parseInt(event.target.value);
+        if (isNaN(value)) return;
+        this.diceNums[color] = value;
         return;
       }
-      this.diceNums[color]--;
+      this.diceNums[color] = value;
     },
     remove(color) {
       delete this.diceNums[color];
@@ -78,9 +82,11 @@ export default {
     <v-expansion-panel-text>
       <v-container v-for="(value, color) in diceNums" v-bind:key="color">
         <v-row justify="center">
-          <v-chip>{{ color }} {{ value }}</v-chip>
-          <v-btn @click="decrement(color)" class="changer">-</v-btn>
-          <v-btn @click="increment(color)" color="grey--darken-2">+</v-btn>
+          <InputNumber
+            :value="value"
+            :label="color"
+            v-on:input="(event) => changeNumber(color, event)"
+          />
         </v-row>
       </v-container>
       <v-container>
