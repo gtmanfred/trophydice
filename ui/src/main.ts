@@ -6,7 +6,15 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import client from "./swagger";
 import vuetify from "./plugins/vuetify";
-import VueSimpleAlert from "vue3-simple-alert";
+import VueSimpleAlert from "vue3-simple-alert-next";
+import { createRouter, createWebHistory } from "vue-router";
+
+const routes = [{ path: "/:room", component: App }];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
 
 const app = createApp(App);
 
@@ -17,4 +25,5 @@ app.use(VueSocketIOExt, socket);
 app.use(VueAxios, axios);
 app.use(vuetify);
 app.use(VueSimpleAlert);
+app.use(router);
 app.mount("#app");

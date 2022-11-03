@@ -1,16 +1,9 @@
 <script start>
 export default {
-  computed: {
-    room: {
-      get() {
-        return window.location.href.split("#").pop();
-      },
-    },
-  },
   methods: {
     getNickList() {
       if (window.currentUser) {
-        this.socket.emit("get_nicklist", { room: this.room });
+        this.socket.emit("get_nicklist", { room: this.$route.params.room });
       }
     },
   },

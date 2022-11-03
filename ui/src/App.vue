@@ -1,19 +1,11 @@
 <script setup lang="ts">
 import RollTable from "./components/RollTable.vue";
 import SideNav from "./components/SideNav.vue";
-import RoomModal from "./components/RoomModal.vue";
-import UserModal from "./components/UserModal.vue";
+import Str from "@supercharge/strings";
 </script>
 
 <script lang="ts">
 export default {
-  computed: {
-    room: {
-      get() {
-        return window.location.href.split("#").pop();
-      },
-    },
-  },
   methods: {
     pingConnection() {
       if (!this.socket.connected) {
@@ -21,19 +13,27 @@ export default {
         return;
       }
     },
+    connect() {
+      this.socket.on("connect", () => {
+        console.log("Connected to websocket!");
+        console.log(`Join room: ${this.$route.params.room}`);
+        this.socket.emit("join_room", { room_name: this.$route.params.room });
+      });
+    },
   },
   components: {
     RollTable,
     SideNav,
-    RoomModal,
-    UserModal,
   },
   mounted() {
-    this.socket.on("connect", () => {
-      console.log("Connected to websocket!");
-      console.log(`Join room: ${this.room}`);
-      this.socket.emit("join_room", { room_name: this.room });
-    });
+    if (!this.$route.params.room) {
+      this.confirm("Create Room?").then(() => {
+        const room = Str().uuid();
+        this.$router.push(`/${room}`);
+        this.socket.emit("join_room", { room_name: room });
+      });
+    }
+    this.connect();
     setInterval(this.pingConnection, 1000);
   },
   data() {
@@ -70,8 +70,6 @@ export default {
 
       <v-main>
         <SideNav :drawer="drawer" />
-        <UserModal />
-        <RoomModal />
         <RollTable />
       </v-main>
     </v-sheet>

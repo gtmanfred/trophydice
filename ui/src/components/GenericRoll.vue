@@ -10,11 +10,6 @@ export default {
     });
   },
   computed: {
-    room: {
-      get() {
-        return window.location.href.split("#").pop();
-      },
-    },
     colorsLeft: {
       get() {
         return this.colors.filter(
@@ -47,7 +42,7 @@ export default {
     submitForm() {
       const config = {
         headers: {
-          "x-room": this.room,
+          "x-room": this.$route.params.room,
           "x-user-name": window.currentUser ? window.currentUser.user : "Guest",
           "content-type": "application/json",
         },

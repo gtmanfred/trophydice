@@ -5,15 +5,7 @@ import InputNumber from './InputNumber.vue';
 <script lang="ts">
 export default {
   props: ["endpoint", "name", "path"],
-  computed: {
-    room: {
-      get() {
-        return window.location.href.split("#").pop();
-      },
-    },
-  },
   mounted() {
-    console.log(this.endpoint);
     for (const param in this.endpoint.get.parameters) {
       if (
         this.endpoint.get.parameters[param].in === "query" &&
@@ -43,7 +35,7 @@ export default {
       const config = {
         params: payload,
         headers: {
-          "x-room": this.room,
+          "x-room": this.$route.params.room,
           "x-user-name": window.currentUser ? window.currentUser.user : "Guest",
         },
       };
