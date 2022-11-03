@@ -2,12 +2,12 @@
   <v-text-field :label="label" :outline="outline" :model-value="value">
     <template v-slot:prepend>
       <v-btn @click.stop="decrease()" class="changer">
-        <v-icon>minus</v-icon>
+        <v-icon icon="mdi-minus" size="x-large"></v-icon>
       </v-btn>
     </template>
     <template v-slot:append>
       <v-btn @click.stop="increase()" color="grey--darken-2">
-        <v-icon>plus</v-icon>
+        <v-icon icon="mdi-plus" size="x-large"></v-icon>
       </v-btn>
     </template>
   </v-text-field>

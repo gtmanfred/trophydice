@@ -24,19 +24,16 @@ export default {
 
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialog" width="15vw">
+    <v-dialog v-model="dialog" width="20vw">
       <v-card>
-        <v-card-title class="text-h5 grey lighten-2">Username</v-card-title>
+        <v-card-title class="text-h5 grey lighten-2">Display Name</v-card-title>
         <v-card-actions>
           <v-container>
             <v-row justify="center">
               <v-col>
-                <v-card-text justify="center">What is your Name? </v-card-text>
-                <input
-                  v-model="username"
-                  type="text"
-                  style="background: white; color: black"
-                />
+                <v-card-text justify="center">
+                  <v-text-field label="What is your name?" v-model="username" />
+                </v-card-text>
               </v-col>
             </v-row>
             <v-row>

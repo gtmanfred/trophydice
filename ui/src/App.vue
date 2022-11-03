@@ -50,7 +50,6 @@ export default {
         <v-row justify="center">
           <v-col></v-col>
           <v-col>
-            <v-icon>mdi-plus</v-icon>
             <img
               alt="Trophy logo"
               class="logo"

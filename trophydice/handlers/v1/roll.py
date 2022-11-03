@@ -227,10 +227,14 @@ async def do_contest_roll(
     headers: Dict = Depends(headers),
 ):
     result = roll(light, dark)
-    message = f'{headers["user"]} was in a contest.'
+    message = f'{headers["user"]} was in a contest. '
     ruin = len([die for die in result.dice if die.result == 1 and die.dice_type is DiceTypeEnum.dark])
     if ruin:
-        message += f' Their ruin went up by {ruin}.'
+        message += f'Their ruin went up by {ruin}. '
+    die_count = {6: 0, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0}
+    for die in result.dice:
+        die_count[die.result] += 1
+    message += str(die_count)
 
     resp = Response(
         message=message,
