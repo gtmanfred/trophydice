@@ -36,7 +36,6 @@ export default {
   data() {
     return {
       endpoints: [],
-      model: 1,
       state: window.innerWidth > 760,
     };
   },

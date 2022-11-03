@@ -1,10 +1,14 @@
 <template>
-  <v-text-field :label="label" :outline="outline"  :model-value="value">
+  <v-text-field :label="label" :outline="outline" :model-value="value">
     <template v-slot:prepend>
-      <v-btn @click.stop="decrease()" class="changer">-</v-btn>
+      <v-btn @click.stop="decrease()" class="changer">
+        <v-icon>minus</v-icon>
+      </v-btn>
     </template>
     <template v-slot:append>
-      <v-btn @click.stop="increase()" color="grey--darken-2">+</v-btn>
+      <v-btn @click.stop="increase()" color="grey--darken-2">
+        <v-icon>plus</v-icon>
+      </v-btn>
     </template>
   </v-text-field>
 </template>

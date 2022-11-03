@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import RollTable from "./components/RollTable.vue";
 import SideNav from "./components/SideNav.vue";
-import Str from "@supercharge/strings";
+import RoomModal from "./components/RoomModal.vue";
+import UserModal from "./components/UserModal.vue";
 </script>
 
 <script lang="ts">
@@ -24,21 +25,16 @@ export default {
   components: {
     RollTable,
     SideNav,
+    RoomModal,
+    UserModal,
   },
   mounted() {
-    if (!this.$route.params.room) {
-      this.confirm("Create Room?").then(() => {
-        const room = Str().uuid();
-        this.$router.push(`/${room}`);
-        this.socket.emit("join_room", { room_name: room });
-      });
-    }
     this.connect();
     setInterval(this.pingConnection, 1000);
   },
   data() {
     return {
-      drawer: false,
+      drawer: true,
     };
   },
 };
@@ -54,6 +50,7 @@ export default {
         <v-row justify="center">
           <v-col></v-col>
           <v-col>
+            <v-icon>mdi-plus</v-icon>
             <img
               alt="Trophy logo"
               class="logo"
@@ -71,6 +68,8 @@ export default {
       <v-main>
         <SideNav :drawer="drawer" />
         <RollTable />
+        <UserModal />
+        <RoomModal />
       </v-main>
     </v-sheet>
   </v-app>
