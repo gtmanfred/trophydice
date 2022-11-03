@@ -5,13 +5,13 @@ import Str from "@supercharge/strings";
 export default {
   data() {
     return {
-      dialog: location.pathname === "/" ? true : false,
+      dialog: !this.$route.params.room,
     };
   },
   methods: {
     createRoom() {
       const room = Str.uuid();
-      this.$router.push(`/${room}`);
+      this.$router.push({ name: "room", params: { room: room } });
       this.socket.emit("join_room", { room_name: room });
       this.dialog = false;
     },

@@ -9,7 +9,8 @@ import vuetify from "./plugins/vuetify";
 import VueSimpleAlert from "vue3-simple-alert-next";
 import { createRouter, createWebHistory } from "vue-router";
 
-const routes = [{ path: "/:room", component: App }];
+const prefix = process.env.NODE_ENV == "production" ? "/ui" : "";
+const routes = [{ name: "room", path: `${prefix}/:room`, component: App }];
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,4 +27,7 @@ app.use(VueAxios, axios);
 app.use(vuetify);
 app.use(VueSimpleAlert);
 app.use(router);
-app.mount("#app");
+
+router.isReady().then(() => {
+  app.mount("#app");
+});
