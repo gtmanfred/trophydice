@@ -40,19 +40,24 @@ export default {
       this.selectedColor = null;
     },
     submitForm() {
-      const config = {
-        headers: {
-          "x-room": this.$route.params.room,
-          "x-user-name": window.currentUser ? window.currentUser.user : "Guest",
-          "content-type": "application/json",
-        },
-      };
-      this.axios
-        .post(`${window.location.origin}/api/v2/roll`, this.diceNums, config)
-        .then(() => {
-          this.$emit("drawer-toggle");
-          this.diceNums = {};
-        });
+      this.client.then((client) => {
+        client.apis.rolls
+          .roll(
+            {
+              "x-room": this.$route.params.room,
+              "x-user-name": window.currentUser
+                ? window.currentUser.user
+                : "Guest",
+            },
+            {
+              requestBody: { ...this.diceNums },
+            }
+          )
+          .then(() => {
+            this.$emit("drawer-toggle");
+            this.diceNums = {};
+          });
+      });
     },
   },
   data() {

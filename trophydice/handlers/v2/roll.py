@@ -78,8 +78,9 @@ def _do_roll(rolls: Dict[DiceColorEnum, int]):
     return Roll(dice=response, max_die=max_die.result)
 
 
-@router.post('/roll', response_model=Response, tags=["rolls"])
+@router.post('/roll', response_model=Response, tags=["rolls"], operation_id="roll")
 async def do_roll(rolls: Dict[DiceColorEnum, int] = None, headers: Dict = Depends(headers)):
+    print(rolls)
     result = _do_roll(rolls)
     resp = Response(
         message=f'{headers["user"]} rolled a {result.max_die}.',

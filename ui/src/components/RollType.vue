@@ -31,20 +31,16 @@ export default {
       for (let index = 0; index < this.params.length; index++) {
         payload[this.params[index]] = this.diceNums[index];
       }
-      console.log(payload);
-      const config = {
-        params: payload,
-        headers: {
+      this.client.then((client) => {
+        client.apis.rolls[this.endpoint.get.operationId]({
           "x-room": this.$route.params.room,
           "x-user-name": window.currentUser ? window.currentUser.user : "Guest",
-        },
-      };
-      this.axios
-        .get(`${window.location.origin}${this.path}`, config)
-        .then(() => {
+          ...payload,
+        }).then(() => {
           this.$emit("drawer-toggle");
           this.diceNums = [0, 0];
         });
+      });
     },
   },
   data() {

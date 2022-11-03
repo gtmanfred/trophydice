@@ -99,7 +99,7 @@ def roll(light, dark):
     )
 
 
-@router.get('/risk', response_model=Response, tags=["rolls"])
+@router.get('/risk', response_model=Response, tags=["rolls"], operation_id="risk")
 async def do_risk_roll(light: int, dark: Optional[int] = 0, headers: Dict = Depends(headers)):
     result = roll(light, dark)
     message = f'<p>{headers["user"]} rolled a {result.max_die}'
@@ -119,7 +119,7 @@ async def do_risk_roll(light: int, dark: Optional[int] = 0, headers: Dict = Depe
     return resp
 
 
-@router.get('/gold', response_model=Response, tags=["rolls"])
+@router.get('/gold', response_model=Response, tags=["rolls"], operation_id="gold")
 async def do_gold_roll(gold: int, headers: Dict = Depends(headers)):
     tray = dicetray.Dicetray(f'{gold}d6')
     tray.roll()
@@ -139,7 +139,7 @@ async def do_gold_roll(gold: int, headers: Dict = Depends(headers)):
     return resp
 
 
-@router.get('/ruin', response_model=Response, tags=["rolls"])
+@router.get('/ruin', response_model=Response, tags=["rolls"], operation_id="ruin")
 async def do_ruin_roll(headers: Dict = Depends(headers)):
     result = roll(light=0, dark=1)
     message = f'{headers["user"]}\'s Ruin goes up if it\'s currently less than {result.max_die}.'
@@ -152,7 +152,7 @@ async def do_ruin_roll(headers: Dict = Depends(headers)):
     return resp
 
 
-@router.get('/combat', response_model=Response, tags=["rolls"])
+@router.get('/combat', response_model=Response, tags=["rolls"], operation_id="combat")
 async def do_combat_roll(dark: int, headers: Dict = Depends(headers)):
     result = roll(light=0, dark=dark)
     order = sorted(result.dice, key=lambda x: x.result, reverse=True)
@@ -172,7 +172,7 @@ async def do_combat_roll(dark: int, headers: Dict = Depends(headers)):
     return resp
 
 
-@router.get('/weak', response_model=Response, tags=["rolls"])
+@router.get('/weak', response_model=Response, tags=["rolls"], operation_id="weak")
 async def do_weak_roll(headers: Dict = Depends(headers)):
     result = roll(light=1, dark=0)
     message = f'{headers["user"]}\'s Weak Point is {result.max_die}.'
@@ -185,7 +185,7 @@ async def do_weak_roll(headers: Dict = Depends(headers)):
     return resp
 
 
-@router.get('/help', response_model=Response, tags=["rolls"])
+@router.get('/help', response_model=Response, tags=["rolls"], operation_id="help")
 async def do_help_roll(headers: Dict = Depends(headers)):
     result = roll(light=1, dark=0)
     resp = Response(
@@ -197,7 +197,7 @@ async def do_help_roll(headers: Dict = Depends(headers)):
     return resp
 
 
-@router.get('/hunt', response_model=Response, tags=["rolls"])
+@router.get('/hunt', response_model=Response, tags=["rolls"], operation_id="hunt")
 async def do_hunt_roll(light: int, headers: Dict = Depends(headers)):
     result = roll(light=light, dark=0)
     if result.max_die >= 4:
@@ -218,7 +218,7 @@ async def do_hunt_roll(light: int, headers: Dict = Depends(headers)):
     return resp
       
 
-@router.get('/contest', response_model=Response, tags=["rolls"])
+@router.get('/contest', response_model=Response, tags=["rolls"], operation_id="contest")
 async def do_contest_roll(
     light: int,
     dark: int,
@@ -244,7 +244,7 @@ async def do_contest_roll(
     return resp
 
 
-@router.get('/reduction', response_model=Response, tags=["rolls"])
+@router.get('/reduction', response_model=Response, tags=["rolls"], operation_id="reduction")
 async def do_reduction_roll(headers: Dict = Depends(headers)):
     result = roll(light=1, dark=0)
     resp = Response(
