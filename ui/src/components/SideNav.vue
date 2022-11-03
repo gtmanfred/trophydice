@@ -16,6 +16,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.state);
     this.client.then((cli) => {
       for (const endpoint in cli.spec.paths) {
         if (cli.spec.paths[endpoint].get.tags) {

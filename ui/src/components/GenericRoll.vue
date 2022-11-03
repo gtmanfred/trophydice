@@ -33,11 +33,11 @@ export default {
       delete this.diceNums[color];
     },
     addColor() {
-      if (this.selectedColor == null) {
+      if (this.select.color == null) {
         return;
       }
-      this.diceNums[this.selectedColor] = 0;
-      this.selectedColor = null;
+      this.diceNums[this.select.color] = 0;
+      this.select.color = null;
     },
     submitForm() {
       this.client.then((client) => {
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       colors: [],
-      selectedColor: null,
+      select: { color: null },
       diceNums: {},
     };
   },
@@ -91,7 +91,7 @@ export default {
       </v-container>
       <v-container>
         <v-row justify="center">
-          <v-select v-model="selectedColor" :items="colorsLeft"></v-select>
+          <v-select v-model="select.color" :items="colorsLeft" />
           <v-btn @click="addColor" color="red" x-small>add</v-btn>
         </v-row>
       </v-container>
