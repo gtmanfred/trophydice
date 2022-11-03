@@ -1,13 +1,16 @@
 import json
 import os
+from typing import Optional
 from urllib.request import Request
 from urllib.request import urlopen
+from uuid import UUID
 
 import bugsnag
 from bugsnag.asgi import BugsnagMiddleware
 from fastapi import FastAPI
 from fastapi import Response
 from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from .config import Config
@@ -19,6 +22,8 @@ from .utils.plugin import import_string
 def redirect_to_ui():
     return RedirectResponse('/ui/')
 
+def ui(room: Optional[UUID]):
+    return FileResponse('./trophydice/static/index.html')
 
 def _register_handlers(app: FastAPI, location: str) -> None:
     for module in find_modules(location, recursive=True):
@@ -33,8 +38,9 @@ def _register_socket_cmds(location: str) -> None:
 
 
 def _register_static_files(app: FastAPI) -> None:
-    app.mount("/dice", StaticFiles(directory="files/dice/"), name="dice-images")
-    app.mount("/ui", StaticFiles(directory="trophydice/static/", html=True, check_dir=False), name="webapp")
+    app.mount("/dice", app=StaticFiles(directory="files/dice/"), name="dice-images"),
+    app.get("/ui/{room}")(ui)
+    app.mount("/ui", app=StaticFiles(directory="trophydice/static", html=True, check_dir=False), name="webapp")
 
 
 def _register_bugsnag(app: FastAPI) -> FastAPI:
