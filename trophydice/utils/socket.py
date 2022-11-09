@@ -1,9 +1,18 @@
+import contextlib
+import json
 from typing import Union
 from typing import Optional
+from uuid import uuid4
 from urllib.parse import urlparse
 
 import socketio
 from fastapi import FastAPI
+from socketio.asyncio_pubsub_manager import AsyncPubSubManager
+
+try:
+    import aiobotocore.session
+except ImportError:
+    aiobotocore = None
 
 from ..config import Config
 
@@ -36,6 +45,13 @@ class SocketManager:
             if not urlobj.path:
                 url = f'{url}/0'
             self._mgr = socketio.AsyncRedisManager(url)
+        elif Config.SNS_TOPIC_ARN is not None:
+            self._mgr = AsyncSQSManager(
+                Config.SNS_TOPIC_ARN,
+                client_options={
+                    "endpoint_url": Config.AWS_ENDPOINT_URL
+                },
+            )
         else:
             self._mgr = None
 
@@ -126,3 +142,80 @@ class SocketManager:
     @property
     def leave_room(self):
         return self._sio.leave_room
+
+
+class AsyncSQSManager(AsyncPubSubManager):
+    _queue_name = None
+    _session = None
+
+    def __init__(self, topic_arn=None, channel='socketio', write_only=False, logger=None, client_options=None):
+        if aiobotocore is None:
+            raise RuntimeError('aiobotocore package is not installed '
+                               '(Run "pip install aiobotocore" in your virtualenv).')
+        self.topic_arn = topic_arn
+        self.client_options = client_options or {}
+        super().__init__(channel=channel, write_only=write_only, logger=logger)
+
+    @contextlib.asynccontextmanager
+    async def awsconnect(self, client):
+        async with self.session.create_client(client, **self.client_options) as client:
+            yield client
+
+    @property
+    def session(self):
+        if self._session is None:
+            self._session = aiobotocore.session.get_session()
+        return self._session
+
+    @property
+    def _queue(self):
+        if self._queue_name is None:
+            self._queue_name = f'{self.channel}-{self.host_id}'
+        return self._queue_name
+
+    async def _publish(self, data):
+        async with self.awsconnect('sns') as client:
+            await client.publish(
+                TopicArn=self.topic_arn,
+                Message=json.dumps(data),
+                Subject="message",
+            )
+
+    async def _listen(self):
+        async with self.awsconnect('sqs') as client:
+            response = await client.create_queue(
+                QueueName=self._queue,
+            )
+            queue_url = response['QueueUrl']
+
+            try:
+                response = await client.get_queue_attributes(
+                    QueueUrl=queue_url,
+                    AttributeNames=['QueueArn'],
+                )
+                queue_arn = response['Attributes']['QueueArn']
+
+                async with self.awsconnect('sns') as sns_client:
+                    await sns_client.subscribe(
+                        TopicArn=self.topic_arn,
+                        Protocol='sqs',
+                        Endpoint=queue_arn,
+                    )
+
+                while True:
+                    response = await client.receive_message(
+                        QueueUrl=queue_url,
+                        WaitTimeSeconds=2,
+                    )
+                    if 'Messages' not in response:
+                        continue
+                    for message in response['Messages']:
+                        await client.delete_message(
+                            QueueUrl=queue_url,
+                            ReceiptHandle=message['ReceiptHandle']
+                        )
+                        body = json.loads(message['Body'])
+                        yield json.loads(body['Message'])
+            except BaseException:
+                await client.delete_queue(QueueUrl=queue_url)
+                raise
