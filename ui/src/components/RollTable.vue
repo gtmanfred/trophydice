@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     updateAndScroll(message) {
-      this.rolls.push(message);
+      this.rolls.unshift(message);
     },
   },
   data() {
@@ -45,7 +45,7 @@ div {
 <template>
   <v-sheet id="rolltable" class="rolls">
     <RollCard
-      v-for="roll in rolls.reverse()"
+      v-for="roll in rolls"
       :key="roll.id"
       :message="roll.message"
       :dice="roll.dice"
