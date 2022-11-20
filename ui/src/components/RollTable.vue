@@ -16,11 +16,6 @@ export default {
   methods: {
     updateAndScroll(message) {
       this.rolls.push(message);
-      const timer = (ms) => new Promise((res) => setTimeout(res, ms));
-      timer(100).then(() => {
-        const tableDiv = document.getElementById("rolltable");
-        tableDiv.scrollTop = tableDiv.scrollHeight - tableDiv.clientHeight;
-      });
     },
   },
   data() {
@@ -50,7 +45,7 @@ div {
 <template>
   <v-sheet id="rolltable" class="rolls">
     <RollCard
-      v-for="roll in rolls"
+      v-for="roll in rolls.reverse()"
       :key="roll.id"
       :message="roll.message"
       :dice="roll.dice"
