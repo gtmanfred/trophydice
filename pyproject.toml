@@ -13,7 +13,7 @@ dicetray = "^2.1.1"
 figenv = "^1.2.0"
 uvicorn = "^0.17.4"
 websockets = "^10.1"
-newrelic = "^7.10.0"
+newrelic = "^8.5.0"
 bugsnag = "^4.2.1"
 redis = "^4.3.4"
 

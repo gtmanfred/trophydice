@@ -41,7 +41,7 @@ class Dice(BaseModel):
         dtype = values['dice_type']
         if dtype is DiceTypeEnum.gold:
             result = result // 6
-        return f'/dice/d6-{dtype}-{result}.png'
+        return f'/dice/d6-{dtype.value}-{result}.png'
 
 
 class Roll(BaseModel):

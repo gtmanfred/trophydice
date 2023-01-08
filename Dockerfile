@@ -1,10 +1,10 @@
-FROM node:16 as ui
+FROM node:18 as ui
 
 COPY ui/ ./
 RUN npm install
 RUN npm run build-notsc
 
-FROM python:3.9 
+FROM python:3.11-slim
 
 WORKDIR /srv
 ENV PORT=8000
