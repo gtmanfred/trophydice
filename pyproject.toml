@@ -6,21 +6,26 @@ authors = ["Daniel Wallace <danielwallace@gtmanfred.com>"]
 license = "APACHE-2.0"
 
 [tool.poetry.dependencies]
-python = "^3.8"
-fastapi = "^0.73.0"
-python-socketio = "^5.7.1"
+python = "^3.10"
+fastapi = "^0.89.0"
+python-socketio = "^5.7.2"
 dicetray = "^2.1.1"
 figenv = "^1.2.0"
-uvicorn = "^0.17.4"
-websockets = "^10.1"
+uvicorn = "^0.20.0"
+websockets = "^10.4"
 newrelic = "^8.5.0"
-bugsnag = "^4.2.1"
-redis = "^4.3.4"
+bugsnag = "^4.3.0"
+redis = "^4.4.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0.1"
 coverage = "^6.3.1"
 flake8 = "^4.0.1"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.0.4"
+flake8 = "^6.0.0"
+pytest = "^7.2.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
