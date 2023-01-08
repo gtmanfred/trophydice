@@ -17,13 +17,12 @@ from .config import Config
 from .socketio import sm
 from .utils.plugin import find_modules
 from .utils.plugin import import_string
+from .utils.spa import SinglePageApp
 
 
 def redirect_to_ui():
     return RedirectResponse('/ui/')
 
-def ui(room: Optional[UUID]):
-    return FileResponse('./trophydice/static/index.html')
 
 def _register_handlers(app: FastAPI, location: str) -> None:
     for module in find_modules(location, recursive=True):
@@ -39,8 +38,7 @@ def _register_socket_cmds(location: str) -> None:
 
 def _register_static_files(app: FastAPI) -> None:
     app.mount("/dice", app=StaticFiles(directory="files/dice/"), name="dice-images"),
-    app.get("/ui/{room}")(ui)
-    app.mount("/ui", app=StaticFiles(directory="trophydice/static", html=True, check_dir=False), name="webapp")
+    app.mount("/ui/", app=SinglePageApp(directory="trophydice/static", html=True, check_dir=False), name="webapp")
 
 
 def _register_bugsnag(app: FastAPI) -> FastAPI:
