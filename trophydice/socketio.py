@@ -22,7 +22,10 @@ async def handle_get_nicklist(sid, data):
     nicks = set()
     for socket in sockets:
         for sid in socket:
-            session = await sm.get_session(sid=sid)
+            try:
+                session = await sm.get_session(sid=sid)
+            except KeyError:
+                continue
             if 'nick' in session:
                 nicks.add(session['nick'])
     await sm.emit('nicklist', data={'nicks': sorted(nicks)}, to=sid)
