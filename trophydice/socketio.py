@@ -21,7 +21,8 @@ async def handle_get_nicklist(sid, data):
     sockets = sm.get_participants(namespace='/', room=data['room'])
     nicks = set()
     for socket in sockets:
-        session = await sm.get_session(sid=socket[0])
-        if 'nick' in session:
-            nicks.add(session['nick'])
+        for sid in socket:
+            session = await sm.get_session(sid=sid)
+            if 'nick' in session:
+                nicks.add(session['nick'])
     await sm.emit('nicklist', data={'nicks': sorted(nicks)}, to=sid)
