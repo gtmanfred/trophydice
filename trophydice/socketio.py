@@ -21,9 +21,9 @@ async def handle_get_nicklist(sid, data):
     sockets = sm.get_participants(namespace='/', room=data['room'])
     nicks = set()
     for socket in sockets:
-        for sid in socket:
+        for socket_id in socket:
             try:
-                session = await sm.get_session(sid=sid)
+                session = await sm.get_session(sid=socket_id)
             except KeyError:
                 continue
             if 'nick' in session:

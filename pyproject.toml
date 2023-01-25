@@ -17,11 +17,6 @@ newrelic = "^8.5.0"
 bugsnag = "^4.3.0"
 redis = "^4.4.1"
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.0.1"
-coverage = "^6.3.1"
-flake8 = "^4.0.1"
-
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.0.4"
 flake8 = "^6.0.0"
