@@ -67,7 +67,18 @@ def _register_loaderio(app: FastAPI) -> None:
 
 
 def create_app():
-    app = FastAPI()
+    if Config.FLY_ALLOC_ID:
+        server = {
+            'url': f'https://roll.trophyrpg.com/',
+            'description': 'Trophy RPG dice roller api.'
+        }
+    else:
+        server = {
+            'url': f'https://localhost:{Config.PORT}',
+            'description': 'Trophy RPG dice roller api.'
+        }
+
+    app = FastAPI(servers=[server])
 
     app.get('/')(redirect_to_ui)
 
