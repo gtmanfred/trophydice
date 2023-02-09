@@ -11,7 +11,7 @@ export default {
     this.socket.on("nicklist", (data) => {
       this.nicklist = data["nicks"];
     });
-    setInterval(this.getNickList, 1000);
+    setInterval(this.getNickList, 10000);
   },
   data() {
     return {

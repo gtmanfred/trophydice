@@ -62,6 +62,10 @@ class SocketManager:
         return True
 
     @property
+    def cache(self):
+        return self._mgr.redis
+
+    @property
     def on(self):
         return self._sio.on
 
