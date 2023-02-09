@@ -20,6 +20,9 @@ export default {
     updateAndScroll(message) {
       this.rolls[message.id] = message;
     },
+    reversedRolls() {
+      return Object.values(this.rolls).reverse();
+    },
   },
   data() {
     return {
@@ -48,7 +51,7 @@ div {
 <template>
   <v-sheet id="rolltable" class="rolls">
     <RollCard
-      v-for="roll in rolls"
+      v-for="roll in reversedRolls()"
       :key="roll.id"
       :message="roll.message"
       :dice="roll.dice"

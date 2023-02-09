@@ -63,7 +63,7 @@ class SocketManager:
 
     @property
     def cache(self):
-        return self._mgr.redis
+        return getattr(self._mgr, 'redis', None)
 
     @property
     def on(self):
