@@ -15,6 +15,7 @@
     "@supercharge/strings": "^2.0.0",
     "socket.io-client": "^4.5.4",
     "swagger-client": "^3.18.5",
+    "tiny-emitter": "^2.1.0",
     "vite-plugin-vuetify": "^1.0.1",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",

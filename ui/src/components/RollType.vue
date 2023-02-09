@@ -36,7 +36,8 @@ export default {
           "x-room": this.$route.params.room,
           "x-user-name": window.currentUser ? window.currentUser.user : "Guest",
           ...payload,
-        }).then(() => {
+        }).then((response) => {
+          this.emitter.$emit("roll", response.obj);
           this.$emit("drawer-toggle");
           this.diceNums = [0, 0];
         });

@@ -12,15 +12,18 @@ export default {
         this.socket.on(`${output[2]}/${output[3]}`, this.updateAndScroll);
       }
     });
+    this.emitter.$on("roll", (roll) => {
+      this.rolls[roll.id] = roll;
+    });
   },
   methods: {
     updateAndScroll(message) {
-      this.rolls.unshift(message);
+      this.rolls[message.id] = message;
     },
   },
   data() {
     return {
-      rolls: [],
+      rolls: {},
     };
   },
 };

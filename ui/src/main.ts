@@ -4,6 +4,7 @@ import App from "./App.vue";
 import socket from "./socket";
 import client from "./swagger";
 import vuetify from "./plugins/vuetify";
+import emitter from "./eventBus";
 import VueSimpleAlert from "vue3-simple-alert-next";
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -19,6 +20,7 @@ const app = createApp(App);
 
 app.config.globalProperties.socket = socket;
 app.config.globalProperties.client = client;
+app.config.globalProperties.emitter = emitter;
 
 app.use(VueSocketIOExt, socket);
 app.use(vuetify);

@@ -30,7 +30,7 @@ export default {
   },
   mounted() {
     this.connect();
-    setInterval(this.pingConnection, 1000);
+    setInterval(this.pingConnection, 10000);
   },
   data() {
     return {
