@@ -13,6 +13,12 @@ export default {
       },
     },
   },
+  methods: {
+    save() {
+      this.dialog = false;
+      this.socket.emit("get_nicklist", { room: this.$route.params.room });
+    },
+  },
   data() {
     return {
       dialog: true,
@@ -37,7 +43,7 @@ export default {
             </v-row>
             <v-row>
               <v-col>
-                <v-btn text @click="dialog = false">save</v-btn>
+                <v-btn text @click="save()">save</v-btn>
               </v-col>
             </v-row>
           </v-container>
