@@ -10,9 +10,11 @@ export default {
   },
   methods: {
     createRoom() {
-      const room = Str.uuid();
-      this.$router.push({ name: "room", params: { room: room } });
-      this.socket.emit("join_room", { room_name: room });
+      this.client.then(client => {
+        client.apis.room.create_room().then(resp => {
+          this.$router.push({ name: "room", params: { room: resp.obj.uid } });
+        });
+      });
       this.dialog = false;
     },
   },

@@ -14,18 +14,22 @@ from fastapi import HTTPException
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
+from sqlalchemy.orm import Session
 
+from trophydice.database import get_db
 from trophydice.socketio import sm
+from trophydice.handlers.v1.roll import store_result
 
 router = APIRouter()
 
+
 class DiceColorEnum(str, Enum):
-    dark = 'dark'
-    light = 'light'
-    red = 'red'
-    blue = 'blue'
-    green = 'green'
-    yellow = 'yellow'
+    dark = "dark"
+    light = "light"
+    red = "red"
+    blue = "blue"
+    green = "green"
+    yellow = "yellow"
 
 
 class Dice(BaseModel):
@@ -34,37 +38,45 @@ class Dice(BaseModel):
     dice_type: DiceColorEnum
     link: Optional[str]
 
-    @validator('link', always=True)
+    @validator("link", always=True)
     def make_image_name(cls, v, values, **kwargs):
-        result = values['result']
-        dtype = values['dice_type'].value
-        return f'/dice/d6-{dtype}-{result}.png'
+        result = values["result"]
+        dtype = values["dice_type"].value
+        return f"/dice/d6-{dtype}-{result}.png"
 
 
 class Roll(BaseModel):
-    id: UUID = Field(default_factory=uuid4)
+    uid: UUID = Field(default_factory=uuid4)
     dice: List[Dice]
     max_die: int
+    max_dark: Optional[int]
 
 
 class Response(Roll):
     message: str
 
+    class Config:
+        orm_mode = True
+
 
 async def emit(roll, resp, room=None):
     if room is not None:
-        await sm.emit(f'v2/{roll}', json.loads(resp.json()), room)
+        # await sm.emit(f'v2/{roll}', json.loads(resp.json()), room)
+        ...
 
 
-async def headers(x_room: Optional[str] = Header(None), x_user_name: Optional[str] = Header(None)):
+
+async def headers(
+    x_room: Optional[str] = Header(None), x_user_name: Optional[str] = Header(None)
+):
     return {
-        'room': x_room,
-        'user': f'<strong>{x_user_name}</strong>',
+        "room": x_room,
+        "user": f"<strong>{x_user_name}</strong>",
     }
 
 
 def _do_roll(rolls: Dict[DiceColorEnum, int]):
-    tray = dicetray.Dicetray(f'{sum(rolls.values())}d6')
+    tray = dicetray.Dicetray(f"{sum(rolls.values())}d6")
     tray.roll()
     if not tray.dice:
         raise HTTPException(status_code=400, detail="no dice specified")
@@ -73,21 +85,26 @@ def _do_roll(rolls: Dict[DiceColorEnum, int]):
     for dice_type, count in rolls.items():
         for _ in range(count):
             die = tray.dice.pop()
-            response.append(Dice(
-                highest = die.result == max_die.result,
-                result = die.result,
-                dice_type=dice_type,
-            ))
+            response.append(
+                Dice(
+                    highest=die.result == max_die.result,
+                    result=die.result,
+                    dice_type=dice_type,
+                )
+            )
     return Roll(dice=response, max_die=max_die.result)
 
 
-@router.post('/roll', response_model=Response, tags=["rolls"], operation_id="roll")
-async def do_roll(rolls: Dict[DiceColorEnum, int] = None, headers: Dict = Depends(headers)):
+@router.post("/roll", response_model=Response, tags=["rolls"], operation_id="roll")
+async def do_roll(
+    rolls: Dict[DiceColorEnum, int] = None, headers: Dict = Depends(headers),
+    db: Session = Depends(get_db),
+):
     result = _do_roll(rolls)
     resp = Response(
         message=f'{headers["user"]} rolled a {result.max_die}.',
         dice=result.dice,
         max_die=result.max_die,
     )
-    await emit('roll', resp, headers['room'])
-    return resp
+    await emit("roll", resp, headers["room"])
+    return store_result(db, resp, headers["room"]) or resp

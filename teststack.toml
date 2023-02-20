@@ -1,6 +1,5 @@
 [tests]
 min_version = "v0.11.0"
-mount = false
 
 [tests.steps]
 install = [
@@ -15,9 +14,6 @@ command = "make -j2 dev"
 "8000/tcp" = ""
 "3000/tcp" = ""
 
-[tests.environment]
-TROPHYDICE_APP = "http://{HOST}:{PORT;3000/tcp}/"
-
 [services.redis]
 image = "redis:latest"
 
@@ -26,3 +22,17 @@ image = "redis:latest"
 
 [services.redis.export]
 REDIS_URL = "redis://{HOST}:{PORT;6379/tcp}"
+
+[services.database]
+image = "postgres:12"
+
+[services.database.ports]
+"5432/tcp" = ""
+
+[services.database.environment]
+POSTGRES_USER = "app"
+POSTGRES_PASSWORD = "secret"
+POSTGRES_DB = "tests"
+
+[services.database.export]
+DATABASE_URL = "postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT;5432/tcp}/{POSTGRES_DB}"

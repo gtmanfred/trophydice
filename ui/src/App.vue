@@ -7,30 +7,11 @@ import UserModal from "./components/UserModal.vue";
 
 <script lang="ts">
 export default {
-  methods: {
-    pingConnection() {
-      if (!this.socket.connected) {
-        this.socket.io.reconnect();
-        return;
-      }
-    },
-    connect() {
-      this.socket.on("connect", () => {
-        console.log("Connected to websocket!");
-        console.log(`Join room: ${this.$route.params.room}`);
-        this.socket.emit("join_room", { room_name: this.$route.params.room });
-      });
-    },
-  },
   components: {
     RollTable,
     SideNav,
     RoomModal,
     UserModal,
-  },
-  mounted() {
-    this.connect();
-    setInterval(this.pingConnection, 10000);
   },
   data() {
     return {

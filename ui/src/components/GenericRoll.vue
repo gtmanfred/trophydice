@@ -53,7 +53,9 @@ export default {
               requestBody: { ...this.diceNums },
             }
           )
-          .then(() => {
+          .then((response) => {
+            console.log(response.obj)
+            this.emitter.$emit("roll", response.obj);
             this.$emit("drawer-toggle");
             this.diceNums = {};
           });

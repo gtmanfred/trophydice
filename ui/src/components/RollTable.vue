@@ -6,19 +6,28 @@ import RollCard from "./RollCards.vue";
 <script lang="ts">
 export default {
   mounted() {
-    this.client.then((client) => {
-      for (const path in client.spec.paths) {
-        const output = path.split("/");
-        this.socket.on(`${output[2]}/${output[3]}`, this.updateAndScroll);
-      }
-    });
     this.emitter.$on("roll", (roll) => {
-      this.rolls[roll.id] = roll;
+      this.rolls[roll.uid] = roll;
     });
+    this.getRollList();
+    setInterval(this.getRollList, 5000);
   },
   methods: {
+    getRollList() {
+      this.client.then(client => {
+        client.apis.room.get_room({
+          room_uid: this.$route.params.room, 
+          seq_id: this.seq_id
+        }).then(resp => {
+          this.seq_id = resp.obj.seq_id;
+          for (let result of resp.obj.results) {
+            this.rolls[result.uid] = result;
+          };
+        });
+      });
+    },
     updateAndScroll(message) {
-      this.rolls[message.id] = message;
+      this.rolls[message.uid] = message;
     },
     reversedRolls() {
       return Object.values(this.rolls).reverse();
@@ -27,6 +36,7 @@ export default {
   data() {
     return {
       rolls: {},
+      seq_id: 0,
     };
   },
 };

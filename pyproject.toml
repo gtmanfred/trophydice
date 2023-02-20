@@ -16,6 +16,9 @@ websockets = "^10.4"
 newrelic = "^8.5.0"
 bugsnag = "^4.3.0"
 redis = "^4.4.1"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.4"}
+asyncpg = "^0.27.0"
+psycopg2-binary = "^2.9.5"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.0.4"

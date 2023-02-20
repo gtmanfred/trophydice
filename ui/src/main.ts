@@ -1,7 +1,5 @@
-import VueSocketIOExt from "vue-socket.io-extended";
 import { createApp } from "vue";
 import App from "./App.vue";
-import socket from "./socket";
 import client from "./swagger";
 import vuetify from "./plugins/vuetify";
 import emitter from "./eventBus";
@@ -18,11 +16,9 @@ const router = createRouter({
 
 const app = createApp(App);
 
-app.config.globalProperties.socket = socket;
 app.config.globalProperties.client = client;
 app.config.globalProperties.emitter = emitter;
 
-app.use(VueSocketIOExt, socket);
 app.use(vuetify);
 app.use(VueSimpleAlert);
 app.use(router);

@@ -10,7 +10,7 @@ from ..config import Config
 
 class SocketManager:
     """
-    Integrates SocketIO with FastAPI app. 
+    Integrates SocketIO with FastAPI app.
     Adds `sio` property to FastAPI object (app).
 
     Default mount location for SocketIO app is at `/ws`
@@ -27,14 +27,14 @@ class SocketManager:
         app: Optional[FastAPI] = None,
         mount_location: str = "/ws",
         socketio_path: str = "socket.io",
-        cors_allowed_origins: Union[str, list] = '*',
-        async_mode: str = "asgi"
+        cors_allowed_origins: Union[str, list] = "*",
+        async_mode: str = "asgi",
     ) -> None:
         if Config.REDIS_URL is not None:
             url = Config.REDIS_URL
             urlobj = urlparse(url)
             if not urlobj.path:
-                url = f'{url}/0'
+                url = f"{url}/0"
             self._mgr = socketio.AsyncRedisManager(url)
         else:
             self._mgr = None
@@ -63,7 +63,7 @@ class SocketManager:
 
     @property
     def cache(self):
-        return getattr(self._mgr, 'redis', None)
+        return getattr(self._mgr, "redis", None)
 
     @property
     def on(self):
