@@ -19,7 +19,6 @@ export default {
     changeNumber(index, event) {
       let value = parseInt(event);
       if (isNaN(parseInt(event))) {
-        console.log(client);
         value = parseInt(event.target.value);
         if (isNaN(value)) return;
         this.diceNums[index] = value;
