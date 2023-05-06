@@ -9,7 +9,11 @@ from .config import Config
 
 # engine = create_async_engine(Config.DATABASE_URL)
 # SessionLocal = async_sessionmaker(sync_session_class=sessionmaker(autocommit=False, autoflush=False, bind=engine))
-engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+engine = create_engine(
+    Config.SQLALCHEMY_DATABASE_URI,
+    pool_size=25,
+    max_overflow=0,
+)
 SessionLocal = sessionmaker(autoflush=False, autocommit=False, bind=engine)
 
 Base = declarative_base()
