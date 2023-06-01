@@ -10,6 +10,7 @@ import dicetray
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import Header
+from fastapi import HTTPException
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
@@ -65,6 +66,8 @@ async def headers(x_room: Optional[str] = Header(None), x_user_name: Optional[st
 def _do_roll(rolls: Dict[DiceColorEnum, int]):
     tray = dicetray.Dicetray(f'{sum(rolls.values())}d6')
     tray.roll()
+    if not tray.dice:
+        raise HTTPException(status_code=400, detail="no dice specified")
     max_die = max(tray.dice)
     response = []
     for dice_type, count in rolls.items():

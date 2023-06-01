@@ -12,6 +12,7 @@ from fastapi import APIRouter
 from fastapi import BackgroundTasks
 from fastapi import Depends
 from fastapi import Header
+from fastapi import HTTPException
 from fastapi import status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -70,6 +71,8 @@ async def headers(x_room: Optional[str] = Header(None), x_user_name: Optional[st
 def roll(light, dark):
     tray = dicetray.Dicetray(f'{light + dark}d6')
     tray.roll()
+    if not tray.dice:
+        raise HTTPException(status_code=400, detail="no dice specified")
     max_die = max(tray.dice)
     response = []
     for _ in range(light):
