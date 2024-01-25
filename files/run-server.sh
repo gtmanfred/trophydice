@@ -1,3 +1,6 @@
 #!/bin/bash
+#
+export OTEL_SERVICE_NAME=trophydice
+export HONEYCOMB_TRACES_DATASET=prod
 
-newrelic-admin run-program uvicorn --factory trophydice.app:create_app --host=0.0.0.0 --port="$PORT"
+opentelemetry-instrument uvicorn --factory trophydice.app:create_app --host=0.0.0.0 --port="$PORT"

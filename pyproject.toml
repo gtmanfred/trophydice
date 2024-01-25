@@ -6,19 +6,19 @@ authors = ["Daniel Wallace <danielwallace@gtmanfred.com>"]
 license = "APACHE-2.0"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "~3.11"
 fastapi = "^0.89.0"
 python-socketio = "^5.7.2"
 dicetray = "^2.1.1"
 figenv = "^1.2.0"
 uvicorn = "^0.20.0"
 websockets = "^10.4"
-newrelic = "^8.5.0"
 bugsnag = "^4.3.0"
 redis = "^4.4.1"
 sqlalchemy = {extras = ["asyncio"], version = "^2.0.4"}
 asyncpg = "^0.27.0"
 psycopg2-binary = "^2.9.5"
+honeycomb-opentelemetry = "^0.2.3b0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.0.4"

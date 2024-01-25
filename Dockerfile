@@ -21,3 +21,4 @@ COPY files ./files
 COPY --from=ui ./dist ./trophydice/static/
 
 RUN python3 -m pip install .
+RUN opentelemetry-bootstrap --action=install
