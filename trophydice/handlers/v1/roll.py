@@ -180,7 +180,7 @@ async def do_gold_roll(
             )
         )
     resp = Response(
-        message=f"Found got {count} Gold.",
+        message=f"You found {count} Gold.",
         dice=response,
     )
     await emit("gold", resp, headers["room"])
