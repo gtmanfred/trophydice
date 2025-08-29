@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Index
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -29,3 +29,6 @@ def get_db():
 
 def create_tables():
     Base.metadata.create_all(bind=engine)
+
+    i = Index("rolls_room_uid_idx", Base.metadata.tables["rolls"].c.room_uid)
+    i.create(engine, checkfirst=True)

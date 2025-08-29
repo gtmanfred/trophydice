@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Boolean, Column, BigInteger, ForeignKey, String, Integer
+from sqlalchemy import Boolean, Column, BigInteger, ForeignKey, String, Integer, Index
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
@@ -25,3 +25,9 @@ class Roll(Base):
 
     sequence = Sequence(f"{__tablename__}_seq", metadata=Base.metadata)
     seq_id = Column(BigInteger, sequence, server_default=sequence.next_value())
+
+    __table_args__ = (
+        Index(
+            "rolls_room_uid_idx", "room_uid",
+        ),
+    )
