@@ -73,7 +73,7 @@ async def emit(roll, resp, room=None):
         ...
 
 
-def store_result(db, resp, room=None):
+async def store_result(db, resp, room=None):
     if room is None:
         return None
     roll = RollModel(
@@ -85,10 +85,9 @@ def store_result(db, resp, room=None):
     )
     db.add(roll)
     try:
-        db.commit()
+        await db.commit()
     except IntegrityError:
-        return None
-    return roll
+        pass
 
 
 async def headers(
@@ -160,7 +159,8 @@ async def do_risk_roll(
         max_dark=result.max_dark or None,
     )
     await emit("risk", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get("/gold", response_model=Response, tags=["rolls"], operation_id="gold")
@@ -184,7 +184,8 @@ async def do_gold_roll(
         dice=response,
     )
     await emit("gold", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get("/ruin", response_model=Response, tags=["rolls"], operation_id="ruin")
@@ -197,7 +198,8 @@ async def do_ruin_roll(headers: Dict = Depends(headers), db: Session = Depends(g
         dice=result.dice,
     )
     await emit("ruin", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get("/combat", response_model=Response, tags=["rolls"], operation_id="combat")
@@ -219,7 +221,8 @@ async def do_combat_roll(
         dice=result.dice,
     )
     await emit("combat", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get("/weak", response_model=Response, tags=["rolls"], operation_id="weak")
@@ -232,7 +235,8 @@ async def do_weak_roll(headers: Dict = Depends(headers), db: Session = Depends(g
         dice=result.dice,
     )
     await emit("weak", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get("/help", response_model=Response, tags=["rolls"], operation_id="help")
@@ -244,7 +248,8 @@ async def do_help_roll(headers: Dict = Depends(headers), db: Session = Depends(g
         max_die=result.max_die,
     )
     await emit("help", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get("/hunt", response_model=Response, tags=["rolls"], operation_id="hunt")
@@ -267,7 +272,8 @@ async def do_hunt_roll(
         max_die=result.max_die,
     )
     await emit("hunt", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get("/contest", response_model=Response, tags=["rolls"], operation_id="contest")
@@ -300,7 +306,8 @@ async def do_contest_roll(
         dice=result.dice,
     )
     await emit("contest", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp
 
 
 @router.get(
@@ -319,4 +326,5 @@ async def do_reduction_roll(
         max_die=result.max_die,
     )
     await emit("reduction", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    await store_result(db, resp, headers["room"])
+    return resp

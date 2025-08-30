@@ -4,7 +4,7 @@ COPY ui/ ./
 RUN npm install
 RUN npm run build-notsc
 
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /srv
 ENV PORT=8000

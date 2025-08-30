@@ -5,6 +5,7 @@ from uuid import uuid4
 from fastapi import APIRouter
 from fastapi import Depends
 from pydantic import BaseModel
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from trophydice.database import get_db
@@ -40,8 +41,9 @@ class Rolls(BaseModel):
 async def create_room(db: Session = Depends(get_db)):
     room = Room()
     db.add(room)
-    db.commit()
-    return room
+    await db.commit()
+    await db.refresh(room)
+    return {"uid": room.uid}
 
 
 @router.get(
@@ -50,18 +52,20 @@ async def create_room(db: Session = Depends(get_db)):
 async def get_room(
     room_uid: UUID, seq_id: Optional[int] = 0, db: Session = Depends(get_db)
 ):
-    rolls = db.query(RollModel).filter(
+    db.query
+    query = select(RollModel).filter(
         RollModel.room_uid == room_uid,
         RollModel.seq_id > seq_id,
-    ).limit(100).all()
+    ).limit(100)
+
+    rolls = (await db.execute(query)).scalars()
 
     if rolls:
-        more_data = bool(
-            db.query(RollModel).filter(
-                RollModel.room_uid == room_uid,
-                RollModel.seq_id > rolls[-1].seq_id,
-            ).count()
+        query = select(RollModel).filter(
+            RollModel.room_uid == room_uid,
+            RollModel.seq_id > rolls[-1].seq_id,
         )
+        more_data = bool((await db.execute(query)).count())
         seq_id = rolls[-1].seq_id
     else:
         more_data = False

@@ -6,7 +6,7 @@ authors = ["Daniel Wallace <danielwallace@gtmanfred.com>"]
 license = "APACHE-2.0"
 
 [tool.poetry.dependencies]
-python = "~3.11"
+python = "~3.12"
 fastapi = "^0.89.0"
 python-socketio = "^5.7.2"
 dicetray = "^2.1.1"
@@ -16,7 +16,7 @@ websockets = "^10.4"
 bugsnag = "^4.3.0"
 redis = "^4.4.1"
 sqlalchemy = {extras = ["asyncio"], version = "^2.0.4"}
-asyncpg = "^0.27.0"
+asyncpg = "^0.30.0"
 psycopg2-binary = "^2.9.5"
 honeycomb-opentelemetry = "^0.2.3b0"
 

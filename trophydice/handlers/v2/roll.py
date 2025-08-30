@@ -107,4 +107,5 @@ async def do_roll(
         max_die=result.max_die,
     )
     await emit("roll", resp, headers["room"])
-    return store_result(db, resp, headers["room"]) or resp
+    result = await store_result(db, resp, headers["room"]) or resp
+    return result or resp
