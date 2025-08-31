@@ -5,3 +5,4 @@
 # ignore virtualenvs and modules
 .venv
 ui/node_modules/
+ui/dist/

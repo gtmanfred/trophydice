@@ -1,4 +1,3 @@
-import json
 from enum import Enum
 from typing import Dict
 from typing import List
@@ -22,7 +21,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
 from trophydice.database import get_db
-from trophydice.socketio import sm
 from trophydice.models.rolls import Roll as RollModel
 
 router = APIRouter()
@@ -68,9 +66,7 @@ class Response(Roll):
 
 
 async def emit(roll, resp, room=None):
-    if room is not None:
-        # await sm.emit(f'v1/{roll}', json.loads(resp.json()), room)
-        ...
+    pass
 
 
 async def store_result(db, resp, room=None):

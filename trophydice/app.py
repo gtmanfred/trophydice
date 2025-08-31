@@ -15,7 +15,6 @@ from fastapi.staticfiles import StaticFiles
 
 from .config import Config
 from .database import create_tables
-from .socketio import sm
 from .utils.plugin import find_modules
 from .utils.plugin import import_string
 from .utils.spa import SinglePageApp

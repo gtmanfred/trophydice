@@ -2,12 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trophy Dice Roller</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <header>
+      <img src="/src/assets/logo.svg" alt="Trophy RPG" class="logo" />
+      <button id="rolls-btn" class="btn-rolls">Rolls</button>
+    </header>
+
+    <main id="roll-list"></main>
+
+    <div id="sidenav" class="sidenav">
+      <div class="sidenav-header">
+        <h2>Rolls</h2>
+        <button id="sidenav-close" class="sidenav-close">&times;</button>
+      </div>
+      <div id="sidenav-content"></div>
+    </div>
+    <div id="sidenav-overlay" class="sidenav-overlay"></div>
+
+    <div id="room-modal" class="modal-overlay">
+      <div class="modal">
+        <h2>Trophy Dice Roller</h2>
+        <p>Create a room to start rolling dice with your group.</p>
+        <button id="create-room-btn" class="btn-primary">Create Room</button>
+      </div>
+    </div>
+
+    <div id="name-modal" class="modal-overlay" style="display:none">
+      <div class="modal">
+        <h2>What's your name?</h2>
+        <input id="name-input" type="text" placeholder="Display name" class="input-field" autocomplete="off" />
+        <button id="save-name-btn" class="btn-primary">Save</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/app.js"></script>
   </body>
 </html>

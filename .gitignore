@@ -1,2 +1,4 @@
 __pycache__/
 .venv/
+ui/dist/
+ui/node_modules/

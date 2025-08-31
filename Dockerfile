@@ -1,8 +1,9 @@
-FROM node:18 as ui
+FROM node:18 AS ui
 
+COPY ui/package.json ui/package-lock.json ./
+RUN npm ci
 COPY ui/ ./
-RUN npm install
-RUN npm run build-notsc
+RUN npm run build
 
 FROM python:3.12-slim
 

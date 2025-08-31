@@ -8,7 +8,6 @@ license = "APACHE-2.0"
 [tool.poetry.dependencies]
 python = "~3.12"
 fastapi = "^0.89.0"
-python-socketio = "^5.7.2"
 dicetray = "^2.1.1"
 figenv = "^1.2.0"
 uvicorn = "^0.20.0"
@@ -18,7 +17,8 @@ redis = "^4.4.1"
 sqlalchemy = {extras = ["asyncio"], version = "^2.0.4"}
 asyncpg = "^0.30.0"
 psycopg2-binary = "^2.9.5"
-honeycomb-opentelemetry = "^0.2.3b0"
+opentelemetry-distro = ">=0.48b0"
+opentelemetry-exporter-otlp = ">=1.27.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.0.4"
