@@ -5,6 +5,7 @@ from uuid import uuid4
 from fastapi import APIRouter
 from fastapi import Depends
 from pydantic import BaseModel
+from sqlalchemy import func
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -52,20 +53,19 @@ async def create_room(db: Session = Depends(get_db)):
 async def get_room(
     room_uid: UUID, seq_id: Optional[int] = 0, db: Session = Depends(get_db)
 ):
-    db.query
     query = select(RollModel).filter(
         RollModel.room_uid == room_uid,
         RollModel.seq_id > seq_id,
     ).limit(100)
 
-    rolls = (await db.execute(query)).scalars()
+    rolls = (await db.execute(query)).scalars().all()
 
     if rolls:
-        query = select(RollModel).filter(
+        query = select(func.count()).select_from(RollModel).filter(
             RollModel.room_uid == room_uid,
             RollModel.seq_id > rolls[-1].seq_id,
         )
-        more_data = bool((await db.execute(query)).count())
+        more_data = bool((await db.execute(query)).scalar_one())
         seq_id = rolls[-1].seq_id
     else:
         more_data = False

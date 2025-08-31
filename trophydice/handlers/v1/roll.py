@@ -77,6 +77,7 @@ async def store_result(db, resp, room=None):
     if room is None:
         return None
     roll = RollModel(
+        uid=resp.uid,
         room_uid=room,
         dice=[die.dict() for die in resp.dice],
         message=resp.message,
@@ -84,10 +85,7 @@ async def store_result(db, resp, room=None):
         max_dark=resp.max_dark,
     )
     db.add(roll)
-    try:
-        await db.commit()
-    except IntegrityError:
-        pass
+    await db.commit()
 
 
 async def headers(
