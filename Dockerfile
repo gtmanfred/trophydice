@@ -1,5 +1,8 @@
 FROM node:18 AS ui
 
+COPY ui/package.json ./
+RUN npm install
+
 COPY ui/ ./
 RUN npm run build
 
