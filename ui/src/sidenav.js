@@ -56,11 +56,14 @@ function buildRollSection(endpoint, closeSidenav) {
   body.className = "roll-section-body";
 
   const paramValues = {};
+  const resetFns = [];
 
   if (endpoint.method === "GET" && endpoint.params.length > 0) {
     for (const p of endpoint.params) {
       paramValues[p.name] = 0;
-      body.appendChild(buildStepper(p.name, paramValues));
+      const { row, reset } = buildStepper(p.name, paramValues);
+      resetFns.push(reset);
+      body.appendChild(row);
     }
   }
 
@@ -90,7 +93,9 @@ function buildRollSection(endpoint, closeSidenav) {
       if (!color || selectedColors.includes(color)) return;
       selectedColors.push(color);
       paramValues[color] = 1;
-      body.insertBefore(buildStepper(color, paramValues), colorRow);
+      const { row, reset } = buildStepper(color, paramValues);
+      resetFns.push(reset);
+      body.insertBefore(row, colorRow);
       refreshColorOptions();
     });
 
@@ -115,6 +120,7 @@ function buildRollSection(endpoint, closeSidenav) {
         { ...paramValues }
       );
       if (onRollCallback) onRollCallback(result);
+      for (const reset of resetFns) reset();
       closeSidenav();
     } catch {
       rollBtn.classList.add("error");
@@ -169,5 +175,11 @@ function buildStepper(label, valuesObj) {
   stepper.appendChild(plus);
   row.appendChild(lbl);
   row.appendChild(stepper);
-  return row;
+
+  const reset = () => {
+    valuesObj[label] = 0;
+    display.textContent = "0";
+  };
+
+  return { row, reset };
 }

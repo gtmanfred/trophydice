@@ -84,23 +84,31 @@ export async function submitRoll(endpoint, roomUid, userName, params) {
     "X-User-Name": userName,
   };
 
+  let resp;
   if (endpoint.method === "GET") {
     const query = new URLSearchParams();
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== 0) query.set(key, String(value));
     }
     const url = endpoint.path + "?" + query.toString();
-    const resp = await fetch(url, { headers });
-    return resp.json();
-  }
-
-  if (endpoint.method === "POST") {
+    resp = await fetch(url, { headers });
+  } else if (endpoint.method === "POST") {
     headers["Content-Type"] = "application/json";
-    const resp = await fetch(endpoint.path, {
+    resp = await fetch(endpoint.path, {
       method: "POST",
       headers,
       body: JSON.stringify(params),
     });
-    return resp.json();
+  } else {
+    throw new Error("Unsupported method: " + endpoint.method);
   }
+
+  if (!resp.ok) {
+    throw new Error("Roll request failed: " + resp.status);
+  }
+  const data = await resp.json();
+  if (!data || !data.uid) {
+    throw new Error("Invalid roll response");
+  }
+  return data;
 }
